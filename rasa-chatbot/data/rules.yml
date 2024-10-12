@@ -1,0 +1,44 @@
+version: "3.1"
+
+rules:
+- rule: Respond to greeting
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+- rule: Respond to thanks
+  steps:
+  - intent: thank_you
+  - action: utter_thanks
+
+- rule: Respond to goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Handle bot challenge
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+- rule: Suggest medicine based on symptom
+  steps:
+  - intent: inform_symptom
+  - action: action_suggest_medicine  # Change this line to use the custom action
+
+- rule: Confirm purchase of a medicine
+  steps:
+  - intent: choose_medicine
+    entities:
+      - medicine
+  - action: action_confirm_purchase
+
+- rule: Complete the purchase
+  steps:
+  - intent: confirm_checkout
+  - action: utter_order_placed
+
+- rule: User denies further purchase
+  steps:
+  - intent: deny_purchase
+  - action: utter_no_more_items  # Ensure this is correct as per your previous discussions

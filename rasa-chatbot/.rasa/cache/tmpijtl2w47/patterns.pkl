@@ -1,0 +1,34 @@
+[
+  {
+    "name": "symptom_regex",
+    "pattern": "chest pain"
+  },
+  {
+    "name": "symptom_regex",
+    "pattern": "fatigue"
+  },
+  {
+    "name": "symptom_regex",
+    "pattern": "fever"
+  },
+  {
+    "name": "symptom_regex",
+    "pattern": "headache"
+  },
+  {
+    "name": "symptom_regex",
+    "pattern": "muscle pain"
+  },
+  {
+    "name": "symptom_regex",
+    "pattern": "nausea"
+  },
+  {
+    "name": "symptom_regex",
+    "pattern": "skin rash"
+  },
+  {
+    "name": "symptom_regex",
+    "pattern": "sore throat"
+  }
+]
