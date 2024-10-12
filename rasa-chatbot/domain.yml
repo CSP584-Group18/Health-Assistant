@@ -1,0 +1,61 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - thank_you
+  - inform_symptom
+  - choose_medicine
+  - confirm_checkout
+  - deny_purchase
+  - bot_challenge 
+
+entities:
+  - symptom
+  - medicine
+
+actions:
+  - action_suggest_medicine
+  - action_confirm_purchase  # Add this line
+  - action_checkout_total
+
+slots:
+  symptom:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: symptom
+  medicine:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: medicine
+
+responses:
+  utter_greet:
+    - text: "Hey! How are you?"
+
+  utter_thanks:
+    - text: "You're welcome!"
+
+  utter_goodbye:
+    - text: "Goodbye! Have a great day!"
+
+  utter_iamabot:
+    - text: "I am a bot, powered by Rasa."
+
+  utter_suggest_medicine:
+    - text: "I'm fetching the medicines based on your symptoms."
+
+  utter_confirm_purchase:
+    - text: "{medicine} has been added to your cart. Would you like to purchase anything else?"
+
+  utter_no_more_items:
+    - text: "Got it! No more items will be added to your cart."
+
+  utter_order_placed:
+    - text: "Thank you! Your order for {medicine} has been placed. You will receive a confirmation email shortly."
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

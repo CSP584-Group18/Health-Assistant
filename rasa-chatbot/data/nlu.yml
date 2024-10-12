@@ -1,0 +1,67 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hello
+    - hi
+    - hey
+    - good morning
+    - good evening
+    - howdy
+
+- intent: goodbye
+  examples: |
+    - goodbye
+    - bye
+    - see you later
+    - take care
+    - have a nice day
+
+- intent: thank_you
+  examples: |
+    - Thank you!
+    - Thanks a lot!
+    - I appreciate it
+    - Thanks so much
+
+- intent: inform_symptom
+  examples: |
+    - I have [headache](symptom) and [fever](symptom)
+    - I'm feeling [nauseous](symptom) and have a [sore throat](symptom)
+    - I have [muscle pain](symptom) and [fatigue](symptom)
+    - I have a [skin rash](symptom) and [itching](symptom)
+    - I feel [dizzy](symptom) and [nauseous](symptom)
+
+- intent: choose_medicine
+  examples: |
+    - I would like to buy [Ibuprofen](medicine)
+    - I'll take the [Ginger Tablets](medicine)
+    - I want some [Aspirin](medicine)
+    - I'll choose [Hydrocortisone Cream](medicine)
+
+- intent: confirm_checkout
+  examples: |
+    - Yes, proceed to checkout
+    - Confirm my order
+    - I would like to checkout
+
+- intent: deny_purchase
+  examples: |
+    - No, that's all
+    - No, I don't need anything else
+
+- regex: symptom_regex
+  examples: |
+    - headache
+    - fever
+    - nausea
+    - sore throat
+    - muscle pain
+    - skin rash
+    - fatigue
+    - chest pain
+
+entities:
+  - symptom
+  - medicine
