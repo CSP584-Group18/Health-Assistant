@@ -138,3 +138,5 @@ __pycache__/
 
 # Ignore virtual environment
 venv/
+
+.DS_Store
