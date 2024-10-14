@@ -1,0 +1,10 @@
+{
+  "rule_only_slots": [
+    "cvv",
+    "address",
+    "name",
+    "email",
+    "card_number"
+  ],
+  "rule_only_loops": []
+}

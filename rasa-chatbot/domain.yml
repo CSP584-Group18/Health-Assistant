@@ -1,3 +1,65 @@
+# version: "3.1"
+
+# intents:
+#   - greet
+#   - goodbye
+#   - thank_you
+#   - inform_symptom
+#   - choose_medicine
+#   - confirm_checkout
+#   - deny_purchase
+#   - bot_challenge 
+
+# entities:
+#   - symptom
+#   - medicine
+
+# actions:
+#   - action_suggest_medicine
+#   - action_confirm_purchase  # Add this line
+#   - action_checkout_total
+
+# slots:
+#   symptom:
+#     type: text
+#     mappings:
+#       - type: from_entity
+#         entity: symptom
+#   medicine:
+#     type: text
+#     mappings:
+#       - type: from_entity
+#         entity: medicine
+
+# responses:
+#   utter_greet:
+#     - text: "Hey! How are you?"
+
+#   utter_thanks:
+#     - text: "You're welcome!"
+
+#   utter_goodbye:
+#     - text: "Goodbye! Have a great day!"
+
+#   utter_iamabot:
+#     - text: "I am a bot, powered by Rasa."
+
+#   utter_suggest_medicine:
+#     - text: "I'm fetching the medicines based on your symptoms."
+
+#   utter_confirm_purchase:
+#     - text: "{medicine} has been added to your cart. Would you like to purchase anything else?"
+
+#   utter_no_more_items:
+#     - text: "Got it! No more items will be added to your cart."
+
+#   utter_order_placed:
+#     - text: "Thank you! Your order for {medicine} has been placed. You will receive a confirmation email shortly."
+
+# session_config:
+#   session_expiration_time: 60
+#   carry_over_slots_to_new_session: true
+
 version: "3.1"
 
 intents:
@@ -6,18 +68,25 @@ intents:
   - thank_you
   - inform_symptom
   - choose_medicine
-  - confirm_checkout
-  - deny_purchase
-  - bot_challenge 
+  - affirm
+  - deny
+  - bot_challenge
+  - ask_price
+  - ask_side_effects
+  - confirm_order
+  - feeling_unwell
+  - inform_severity
+  - provide_personal_info
 
 entities:
   - symptom
   - medicine
-
-actions:
-  - action_suggest_medicine
-  - action_confirm_purchase  # Add this line
-  - action_checkout_total
+  - severity
+  - name
+  - email
+  - address
+  - card_number
+  - cvv
 
 slots:
   symptom:
@@ -30,31 +99,86 @@ slots:
     mappings:
       - type: from_entity
         entity: medicine
+  severity:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: severity
+  name:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: name
+  email:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: email
+  address:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: address
+  card_number:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: card_number
+  cvv:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: cvv
 
 responses:
   utter_greet:
-    - text: "Hey! How are you?"
+    - text: "Hello! How can I help you?"
 
   utter_thanks:
     - text: "You're welcome!"
 
   utter_goodbye:
-    - text: "Goodbye! Have a great day!"
+    - text: "Goodbye! Take care."
 
   utter_iamabot:
     - text: "I am a bot, powered by Rasa."
 
-  utter_suggest_medicine:
-    - text: "I'm fetching the medicines based on your symptoms."
+  utter_ask_symptoms:
+    - text: "What symptoms are you experiencing?"
 
-  utter_confirm_purchase:
-    - text: "{medicine} has been added to your cart. Would you like to purchase anything else?"
+  utter_ask_severity:
+    - text: "How severe are your symptoms? (Minor/Moderate/Major)"
 
-  utter_no_more_items:
-    - text: "Got it! No more items will be added to your cart."
+  utter_ask_purchase:
+    - text: "Would you like to purchase this medicine?"
 
-  utter_order_placed:
-    - text: "Thank you! Your order for {medicine} has been placed. You will receive a confirmation email shortly."
+  utter_anything_else:
+    - text: "Is there anything else I can help you with?"
+
+  utter_ask_checkout_info:
+    - text: "I'll need some information to process your order."
+
+  utter_ask_name:
+    - text: "What's your full name?"
+
+  utter_ask_email:
+    - text: "What's your email address?"
+
+  utter_ask_address:
+    - text: "What's your shipping address?"
+
+  utter_ask_card_number:
+    - text: "Please provide your credit card number."
+
+  utter_ask_cvv:
+    - text: "What's the CVV number on your card?"
+
+actions:
+  - action_suggest_medicine
+  - action_get_side_effects
+  - action_get_price
+  - action_confirm_purchase
+  - action_process_order
 
 session_config:
   session_expiration_time: 60

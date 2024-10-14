@@ -1,3 +1,49 @@
+# version: "3.1"
+
+# rules:
+# - rule: Respond to greeting
+#   steps:
+#   - intent: greet
+#   - action: utter_greet
+
+# - rule: Respond to thanks
+#   steps:
+#   - intent: thank_you
+#   - action: utter_thanks
+
+# - rule: Respond to goodbye
+#   steps:
+#   - intent: goodbye
+#   - action: utter_goodbye
+
+# - rule: Handle bot challenge
+#   steps:
+#   - intent: bot_challenge
+#   - action: utter_iamabot
+
+# - rule: Suggest medicine based on symptom
+#   steps:
+#   - intent: inform_symptom
+#   - action: action_suggest_medicine  # Change this line to use the custom action
+
+# - rule: Confirm purchase of a medicine
+#   steps:
+#   - intent: choose_medicine
+#     entities:
+#       - medicine
+#   - action: action_confirm_purchase
+
+# - rule: Complete the purchase
+#   steps:
+#   - intent: confirm_checkout
+#   - action: utter_order_placed
+
+# - rule: User denies further purchase
+#   steps:
+#   - intent: deny_purchase
+#   - action: utter_no_more_items  # Ensure this is correct as per your previous discussions
+
+
 version: "3.1"
 
 rules:
@@ -5,6 +51,83 @@ rules:
   steps:
   - intent: greet
   - action: utter_greet
+
+- rule: Respond to feeling unwell
+  steps:
+  - intent: feeling_unwell
+  - action: utter_ask_symptoms
+
+- rule: Ask about severity after symptoms
+  steps:
+  - intent: inform_symptom
+  - action: utter_ask_severity
+
+- rule: Suggest medicine based on symptoms and severity
+  steps:
+  - intent: inform_severity
+  - action: action_suggest_medicine
+
+- rule: Provide side effects information
+  steps:
+  - intent: ask_side_effects
+  - action: action_get_side_effects
+
+- rule: Provide price information
+  steps:
+  - intent: ask_price
+  - action: action_get_price
+  - action: utter_ask_purchase
+
+- rule: Confirm purchase of a medicine
+  steps:
+  - intent: choose_medicine
+  - action: action_confirm_purchase
+
+- rule: Start checkout process
+  steps:
+  - intent: confirm_order
+  - action: utter_ask_checkout_info
+  - action: utter_ask_name
+
+- rule: Ask for email
+  steps:
+  - intent: provide_personal_info
+    entities:
+      - name
+  - action: utter_ask_email
+
+- rule: Ask for address
+  steps:
+  - intent: provide_personal_info
+    entities:
+      - email
+  - action: utter_ask_address
+
+- rule: Ask for card number
+  steps:
+  - intent: provide_personal_info
+    entities:
+      - address
+  - action: utter_ask_card_number
+
+- rule: Ask for CVV
+  steps:
+  - intent: provide_personal_info
+    entities:
+      - card_number
+  - action: utter_ask_cvv
+
+- rule: Process order
+  steps:
+  - intent: provide_personal_info
+    entities:
+      - cvv
+  - action: action_process_order
+
+- rule: Ask if help is needed with anything else
+  steps:
+  - action: action_process_order
+  - action: utter_anything_else
 
 - rule: Respond to thanks
   steps:
@@ -20,25 +143,3 @@ rules:
   steps:
   - intent: bot_challenge
   - action: utter_iamabot
-
-- rule: Suggest medicine based on symptom
-  steps:
-  - intent: inform_symptom
-  - action: action_suggest_medicine  # Change this line to use the custom action
-
-- rule: Confirm purchase of a medicine
-  steps:
-  - intent: choose_medicine
-    entities:
-      - medicine
-  - action: action_confirm_purchase
-
-- rule: Complete the purchase
-  steps:
-  - intent: confirm_checkout
-  - action: utter_order_placed
-
-- rule: User denies further purchase
-  steps:
-  - intent: deny_purchase
-  - action: utter_no_more_items  # Ensure this is correct as per your previous discussions
