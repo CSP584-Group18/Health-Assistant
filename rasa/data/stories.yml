@@ -1,0 +1,55 @@
+version: "3.1"
+
+stories:
+  - story: Handle symptoms and severity
+    steps:
+      - intent: symptom_report
+      - action: action_process_symptoms
+      - intent: select_severity
+      - action: action_provide_medicine
+
+  - story: Ask for medicine details and side effects
+    steps:
+      - intent: provide_medicine
+      - action: action_medicine_details
+      - intent: ask_side_effects
+      - action: action_provide_side_effects
+
+  - story: Happy path
+    steps:
+      - intent: greet
+      - action: action_greet_user
+      - intent: mood_happy
+      - action: action_greet_user
+
+  - story: Sad path with symptoms
+    steps:
+      - intent: greet
+      - action: action_greet_user
+      - intent: mood_sad
+      - action: action_greet_user
+      - intent: symptom_report
+      - action: action_process_symptoms
+      - intent: select_severity
+      - action: action_provide_medicine
+
+  - story: Purchase confirmation
+    steps:
+      - intent: confirm_purchase_yes_no
+      - action: action_confirm_purchase
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - story: User asks for side effects before purchasing
+    steps:
+      - intent: ask_side_effects
+      - action: action_provide_side_effects
+      - intent: confirm_purchase_yes_no
+      - action: action_confirm_purchase
+
+  - story: User wants to buy medicine
+    steps:
+      - intent: ask_side_effects
+      - action: action_provide_side_effects
+      - intent: confirm_purchase_yes_no
+      - action: action_confirm_purchase

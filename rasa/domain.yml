@@ -1,0 +1,80 @@
+version: "3.1"
+
+intents:
+  - greet
+  - mood_happy
+  - mood_sad
+  - symptom_report
+  - select_severity
+  - provide_medicine
+  - ask_side_effects
+  - confirm_purchase
+  - goodbye
+  - confirm_purchase_yes_no  # Intent to handle Yes/No response for purchase confirmation
+
+entities:
+  - symptoms
+  - severity
+  - medicine_name
+  - response  # Entity to capture Yes/No responses
+
+slots:
+  symptoms:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: symptoms
+  severity:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: severity
+  medicine_ids:
+    type: list
+    mappings:
+      - type: from_entity
+        entity: medicine_name
+  selected_medicine:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: medicine_name
+  response:  # Slot to capture the user's response (Yes/No) to purchase confirmation
+    type: text
+    mappings:
+      - type: from_entity
+        entity: response
+
+responses:
+  utter_greet:
+    - text: "Hello! How can I assist you today?"
+  utter_happy:
+    - text: "I'm glad to hear you're feeling good!"
+  utter_sad:
+    - text: "I'm sorry to hear that. Could you please describe your symptoms so I can assist?"
+  utter_select_severity:
+    - text: "Please select the severity of your symptoms:"
+  utter_provide_medicine:
+    - text: "The recommended medicines are: {medicine_names}"
+  utter_medicine_details:
+    - text: "The price of {selected_medicine} is {price}. Description: {description}."
+  utter_side_effects:
+    - text: "The side effects of {selected_medicine} are: {side_effects}. Would you like to proceed with the purchase?"
+  utter_goodbye:
+    - text: "Goodbye! Take care."
+  utter_confirm_purchase:
+    - text: "Would you like to buy this medicine?"
+  utter_redirect_checkout:
+    - text: "Redirecting you to the checkout page. Please visit: [Checkout Page](http://your-react-app.com/checkout)"  # Update with actual URL
+  utter_decline_purchase:
+    - text: "Thank you! Is there anything else I can help you with?"
+
+actions:
+  - action_greet_user
+  - action_process_symptoms
+  - action_provide_medicine
+  - action_medicine_details
+  - action_provide_side_effects
+  - action_checkout
+  - action_confirm_purchase  # Action to handle Yes/No responses and take respective actions
+
