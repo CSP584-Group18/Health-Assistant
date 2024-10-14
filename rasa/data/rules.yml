@@ -1,0 +1,47 @@
+version: "3.1"
+
+rules:
+  - rule: Greet the user
+    steps:
+      - intent: greet
+      - action: action_greet_user
+
+  - rule: Goodbye message
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - rule: Respond to mood_happy
+    steps:
+      - intent: mood_happy
+      - action: action_greet_user
+
+  - rule: Respond to mood_sad
+    steps:
+      - intent: mood_sad
+      - action: action_greet_user
+
+  - rule: Ask for symptom severity
+    steps:
+      - intent: symptom_report
+      - action: action_process_symptoms
+
+  - rule: Provide medicines based on severity
+    steps:
+      - intent: select_severity
+      - action: action_provide_medicine
+
+  - rule: Provide medicine details
+    steps:
+      - intent: provide_medicine
+      - action: action_medicine_details
+
+  - rule: Handle side effects inquiry
+    steps:
+      - intent: ask_side_effects
+      - action: action_provide_side_effects
+
+  - rule: User confirms purchase
+    steps:
+      - intent: confirm_purchase_yes_no
+      - action: action_confirm_purchase
