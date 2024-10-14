@@ -1,18 +1,12 @@
 const mongoose = require('mongoose');
 
-const MedicineSchema = new mongoose.Schema({
-  medicineid: { type: Number, required: true },
-  name: { type: String, required: true },
-  activeingredient: { type: String, required: true },
-  conditionstreated: { type: String, required: true },
-  doseform: { type: String, required: true },
-  dosage: { type: String, required: true },
-  sideeffect: { type: String, required: true },
-  agegroup: { type: String, required: true },
-  prescriptionrequirement: { type: String, required: true },
-  manufacturer: { type: String, required: true },
-  severity: { type: String, required: true },
-  price: { type: Number, required: true }
+const medicineSchema = new mongoose.Schema({
+  _id: String,
+  medicine_name: String,
+  price: Number,
+  description: String,
+  side_effects: [String],
+  dosage: String,
 });
 
-module.exports = mongoose.model('Medicine', MedicineSchema);
+module.exports = mongoose.model('Medicine', medicineSchema);
