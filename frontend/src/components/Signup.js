@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './CSS/Signup.css'; // Ensure this imports your shared CSS file
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -8,13 +9,12 @@ const Signup = () => {
     age: '',
     email: '',
     password: '',
-    healthHistory: ''
   });
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
 
-  const { firstName, lastName, age, email, password, healthHistory } = formData;
+  const { firstName, lastName, age, email, password } = formData;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,7 +43,7 @@ const Signup = () => {
 
       setSuccessMessage(data.msg);
       setTimeout(() => {
-        navigate('/login'); // Redirect to login page after successful registration
+        navigate('/login');
       }, 2000);
     } catch (err) {
       setError(err.message);
@@ -51,10 +51,10 @@ const Signup = () => {
   };
 
   return (
-    <div>
+    <div className="form-container">
       <h2>Sign Up</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+      {error && <p className="error-message">{error}</p>}
+      {successMessage && <p className="success-message">{successMessage}</p>}
       <form onSubmit={handleSubmit}>
         <div>
           <label>First Name:</label>
@@ -102,15 +102,6 @@ const Signup = () => {
             type="password"
             name="password"
             value={password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label>Health History:</label>
-          <textarea
-            name="healthHistory"
-            value={healthHistory}
             onChange={handleChange}
             required
           />

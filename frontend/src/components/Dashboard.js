@@ -1,43 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Dashboard.css'; // Import the CSS file
+import './CSS/MedicineCard.css';
 
 const Dashboard = () => {
+  const [medicines, setMedicines] = useState([]);
   const navigate = useNavigate();
 
-  // Function to handle navigation to different pages
-  const handleNavigation = (page) => {
-    navigate(page);
+  useEffect(() => {
+    const fetchMedicines = async () => {
+      try {
+        const response = await fetch('http://localhost:3006/api/medicines');
+        const data = await response.json();
+        setMedicines(data);
+      } catch (error) {
+        console.error('Error fetching medicines:', error);
+      }
+    };
+
+    fetchMedicines();
+  }, []);
+
+  const handleCardClick = (id) => {
+    navigate(`/medicine/${id}`);
   };
 
   return (
-    <div className="container">
-      <h1>Welcome to the Dashboard!</h1>
-
-      {/* Navigation buttons */}
-      <div className="buttons-container">
-        <button onClick={() => handleNavigation('/profile')} className="button">
-          Profile
-        </button>
-        <button onClick={() => handleNavigation('/cart')} className="button">
-          Cart
-        </button>
-        <button onClick={() => handleNavigation('/home')} className="button">
-          Home
-        </button>
-      </div>
-
-      {/* Categories Section */}
-      <div className="categories-container">
-        <h2>Product Categories</h2>
-        <div className="categories-grid">
-          <div className="category-circle">Smart Doorbells</div>
-          <div className="category-circle">Smart Doorlocks</div>
-          <div className="category-circle">Smart Speakers</div>
-          <div className="category-circle">Smart Lightings</div>
-          <div className="category-circle">Smart Thermostats</div>
+    <div className="medicine-dashboard">
+      {medicines.map((medicine) => (
+        <div key={medicine._id} className="medicine-card" onClick={() => handleCardClick(medicine._id)}>
+          <h3>{medicine.medicine_name}</h3>
+          <p>Price: ${medicine.price}</p>
+          <p>{medicine.description}</p>
         </div>
-      </div>
+      ))}
     </div>
   );
 };
