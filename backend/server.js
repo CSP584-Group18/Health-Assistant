@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const axios = require('axios');
 const connectDB = require('./config/db');
 require('dotenv').config();
@@ -8,6 +9,12 @@ const app = express();
 
 // Connect to the database
 connectDB();
+
+app.use(cors({
+    origin: 'http://localhost:3000', // Your frontend URL
+    methods: ['GET', 'POST'], // Specify allowed methods
+    credentials: true // Allow credentials if needed (e.g., cookies)
+}));
 
 // Middleware setup to parse incoming JSON
 app.use(express.json());
