@@ -13,8 +13,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(''); // Clear previous errors
-  
+    setError('');
     try {
       const response = await axios.post(`${baseURL}/auth/login`, {
         email,
