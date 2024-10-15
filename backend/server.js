@@ -24,6 +24,7 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/medicines', require('./routes/medicines'));
 app.use('/api/conversations', require('./routes/conversations'));
 app.use('/api/symptoms', require('./routes/symptoms'));
+app.use('/api/orders', require('./routes/order'));
 
 // Chatbot endpoint
 app.post('/chat', async (req, res) => {
