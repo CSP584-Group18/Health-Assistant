@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CSS/MedicineCard.css";
+import axios from "axios";
 
 const baseURL = process.env.REACT_APP_API_BASE_URL;
 
