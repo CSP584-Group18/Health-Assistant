@@ -8,14 +8,13 @@ const MedicineDetail = () => {
   useEffect(() => {
     const fetchMedicine = async () => {
       try {
-        const response = await fetch(`http://localhost:3006/api/medicines/${id}`);
-        const data = await response.json();
-        setMedicine(data);
+        const response = await axios.get(`http://localhost:3006/api/medicines/${id}`);
+        setMedicine(response.data);
       } catch (error) {
         console.error('Error fetching medicine:', error);
       }
     };
-
+  
     fetchMedicine();
   }, [id]);
 

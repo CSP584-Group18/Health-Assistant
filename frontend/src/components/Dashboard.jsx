@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './CSS/MedicineCard.css';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./CSS/MedicineCard.css";
 
 const Dashboard = () => {
   const [medicines, setMedicines] = useState([]);
@@ -9,11 +9,10 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchMedicines = async () => {
       try {
-        const response = await fetch('http://localhost:3006/api/medicines');
-        const data = await response.json();
-        setMedicines(data);
+        const response = await axios.get("http://localhost:3006/api/medicines");
+        setMedicines(response.data);
       } catch (error) {
-        console.error('Error fetching medicines:', error);
+        console.error("Error fetching medicines:", error);
       }
     };
 
@@ -27,7 +26,11 @@ const Dashboard = () => {
   return (
     <div className="medicine-dashboard">
       {medicines.map((medicine) => (
-        <div key={medicine._id} className="medicine-card" onClick={() => handleCardClick(medicine._id)}>
+        <div
+          key={medicine._id}
+          className="medicine-card"
+          onClick={() => handleCardClick(medicine._id)}
+        >
           <h3>{medicine.medicine_name}</h3>
           <p>Price: ${medicine.price}</p>
           <p>{medicine.description}</p>

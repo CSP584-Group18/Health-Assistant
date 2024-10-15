@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './CSS/Signup.css'; // Ensure this imports your shared CSS file
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./CSS/Signup.css"; // Ensure this imports your shared CSS file
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    age: '',
-    email: '',
-    password: '',
+    firstName: "",
+    lastName: "",
+    age: "",
+    email: "",
+    password: "",
   });
-  const [error, setError] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
 
   const { firstName, lastName, age, email, password } = formData;
@@ -23,30 +23,33 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setSuccessMessage('');
+    setError("");
+    setSuccessMessage("");
 
     try {
-      const response = await fetch('http://localhost:3006/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
+      const response = await axios.post(
+        "http://localhost:3006/api/auth/register",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      const data = await response.json();
+      const data = response.data;
 
-      if (!response.ok) {
-        throw new Error(data.msg || 'Registration failed. Please try again.');
+      if (!response.status === 200) {
+        throw new Error(data.msg || "Registration failed. Please try again.");
       }
 
       setSuccessMessage(data.msg);
+
       setTimeout(() => {
-        navigate('/login');
+        navigate("/login"); // Redirect to login after 2 seconds on success
       }, 2000);
     } catch (err) {
-      setError(err.message);
+      setError(err.response?.data?.msg || err.message);
     }
   };
 
@@ -108,7 +111,9 @@ const Signup = () => {
         </div>
         <button type="submit">Sign Up</button>
       </form>
-      <p>Already have an account? <a href="/login">Log in here</a></p>
+      <p>
+        Already have an account? <a href="/login">Log in here</a>
+      </p>
     </div>
   );
 };

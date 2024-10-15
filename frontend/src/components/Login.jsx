@@ -11,18 +11,19 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(''); // Clear previous errors
-
+  
     try {
-      const response = await fetch('http://localhost:3006/api/auth/login', {
-        method: 'POST',
+      const response = await axios.post('http://localhost:3006/api/auth/login', {
+        email,
+        password
+      }, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
       });
-
-      const data = await response.json();
-
+  
+      const data = response.data;
+  
       if (data.success) {
         // Store user data in localStorage or use context/state
         localStorage.setItem('user', JSON.stringify(data.user));
