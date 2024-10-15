@@ -18,15 +18,15 @@ const Login = () => {
     try {
       const response = await axios.post(`${baseURL}/auth/login`, {
         email,
-        password
+        password  
       }, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-  
+      console.log(response);
       const data = response.data;
-  
+      
       if (data.success) {
         // Store user data in localStorage or use context/state
         localStorage.setItem('user', JSON.stringify(data.user));

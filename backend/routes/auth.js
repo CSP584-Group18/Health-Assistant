@@ -4,12 +4,10 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-// Register User (POST /api/auth/register)
 router.post('/register', async (req, res) => {
   const { firstName, lastName, age, email, password, healthHistory } = req.body;
 
   try {
-    // Check if user already exists
     let user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({ 
@@ -18,7 +16,6 @@ router.post('/register', async (req, res) => {
       });
     }
 
-    // Create a new user object
     user = new User({
       firstName,
       lastName,
@@ -28,14 +25,11 @@ router.post('/register', async (req, res) => {
       password
     });
 
-    // Hash the password before saving the user
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
 
-    // Save the user in the database
     await user.save();
 
-    // Respond with the created user data (without password)
     const userData = {
       firstName: user.firstName,
       lastName: user.lastName,
@@ -45,7 +39,6 @@ router.post('/register', async (req, res) => {
       _id: user._id
     };
 
-    // Return 201 Created status
     return res.status(201).json({
       success: true,
       msg: 'User registered successfully.',
@@ -54,7 +47,6 @@ router.post('/register', async (req, res) => {
   } catch (err) {
     console.error(err.message);
 
-    // Return 500 Internal Server Error
     return res.status(500).json({
       success: false,
       msg: 'Server error. Please try again later.'
@@ -62,12 +54,10 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// Login User (POST /api/auth/login)
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Check if user exists
     let user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ 
@@ -76,7 +66,6 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    // Compare the entered password with the hashed password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ 
@@ -85,7 +74,6 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    // Create JWT token
     const payload = {
       user: {
         id: user.id
@@ -95,7 +83,6 @@ router.post('/login', async (req, res) => {
     jwt.sign(payload, 'secretKey', { expiresIn: 360000 }, (err, token) => {
       if (err) throw err;
 
-      // Return 200 OK with JWT token
       return res.status(200).json({
         success: true,
         msg: 'Login successful.',
@@ -105,7 +92,6 @@ router.post('/login', async (req, res) => {
   } catch (err) {
     console.error(err.message);
 
-    // Return 500 Internal Server Error
     return res.status(500).json({
       success: false,
       msg: 'Server error. Please try again later.'
