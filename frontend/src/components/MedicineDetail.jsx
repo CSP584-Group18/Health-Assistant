@@ -4,6 +4,7 @@ import axios from "axios";
 import "./CSS/MedicineDetail.css";
 
 const baseURL = process.env.REACT_APP_API_BASE_URL;
+const image = process.env.PUBLIC_URL;
 
 const MedicineDetail = () => {
   const { id } = useParams();

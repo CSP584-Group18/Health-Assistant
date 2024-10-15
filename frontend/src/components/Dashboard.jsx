@@ -4,6 +4,7 @@ import axios from "axios";
 import "./CSS/MedicineCard.css";  // Your existing CSS file
 
 const baseURL = process.env.REACT_APP_API_BASE_URL;
+const image = process.env.PUBLIC_URL;
 
 const Dashboard = () => {
   const [medicines, setMedicines] = useState([]);
