@@ -6,7 +6,7 @@ const User = require('../models/User');
 
 // Register User (POST /api/auth/register)
 router.post('/register', async (req, res) => {
-  const { firstName, lastName, age, email, password, healthHistory } = req.body;
+  const { firstName, lastName, age, email, password} = req.body;
 
   try {
     // Check if user already exists
@@ -24,7 +24,6 @@ router.post('/register', async (req, res) => {
       lastName,
       age,
       email,
-      healthHistory,
       password
     });
 
@@ -41,7 +40,6 @@ router.post('/register', async (req, res) => {
       lastName: user.lastName,
       age: user.age,
       email: user.email,
-      healthHistory: user.healthHistory,
       _id: user._id
     };
 
