@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CSS/MedicineCard.css";
 
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+
 const Dashboard = () => {
   const [medicines, setMedicines] = useState([]);
   const navigate = useNavigate();
@@ -9,7 +11,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchMedicines = async () => {
       try {
-        const response = await axios.get("http://localhost:3006/api/medicines");
+        const response = await axios.get(`${baseURL}/medicines`);
         setMedicines(response.data);
       } catch (error) {
         console.error("Error fetching medicines:", error);

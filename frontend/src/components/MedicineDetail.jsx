@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+
 const MedicineDetail = () => {
   const { id } = useParams();
   const [medicine, setMedicine] = useState(null);
@@ -8,7 +10,7 @@ const MedicineDetail = () => {
   useEffect(() => {
     const fetchMedicine = async () => {
       try {
-        const response = await axios.get(`http://localhost:3006/api/medicines/${id}`);
+        const response = await axios.get(`${baseURL}/medicines/${id}`);
         setMedicine(response.data);
       } catch (error) {
         console.error('Error fetching medicine:', error);

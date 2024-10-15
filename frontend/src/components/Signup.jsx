@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CSS/Signup.css"; // Ensure this imports your shared CSS file
 
+const baseURL = process.env.REACT_APP_API_BASE_URL;
+
 const Signup = () => {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -28,7 +30,7 @@ const Signup = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3006/api/auth/register",
+        `${baseURL}/auth/register`,
         formData,
         {
           headers: {
