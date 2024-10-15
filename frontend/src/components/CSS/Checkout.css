@@ -1,0 +1,94 @@
+.checkout-page {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e0f7fa;
+    color: #333;
+  }
+  
+  .checkout-page * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .checkout-page form {
+    background-color: #ffffff;
+    max-width: 600px; 
+    margin: 50px auto; 
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    border: 1px solid #b2ebf2;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .checkout-page h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #00796b;
+  }
+  
+  .checkout-page div {
+    margin-bottom: 20px;
+  }
+  
+  .checkout-page label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #00796b;
+  }
+  
+  .checkout-page input,
+  .checkout-page select,
+  .checkout-page button {
+    padding: 14px;
+    font-size: 16px;
+    border: 2px solid #00796b;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .checkout-page input:focus,
+  .checkout-page select:focus {
+    outline: none;
+    border-color: #004d40; 
+    box-shadow: 0 0 5px rgba(0, 77, 64, 0.2);
+  }
+  
+  .checkout-page button {
+    background-color: #00796b;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+  }
+  
+  .checkout-page button:hover {
+    background-color: #004d40;
+  }
+  
+  .checkout-page button:disabled {
+    background-color: #b2dfdb;
+    cursor: not-allowed;
+  }
+  
+  @media screen and (max-width: 600px) {
+    .checkout-page form {
+      padding: 20px;
+    }
+  
+    .checkout-page input,
+    .checkout-page select,
+    .checkout-page button {
+      font-size: 14px;
+      padding: 12px;
+    }
+  
+    .checkout-page h2 {
+      font-size: 24px;
+    }
+  }
+  
