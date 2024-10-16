@@ -131,7 +131,6 @@ dist
 
 # Ignore Rasa cache and models
 .rasa/
-models/
 
 # Ignore Python bytecode files
 __pycache__/

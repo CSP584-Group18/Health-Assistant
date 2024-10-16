@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./CSS/MedicineCard.css";  // Your existing CSS file
+import "./CSS/MedicineCard.css"; // Your existing CSS file
 
 const baseURL = process.env.REACT_APP_API_BASE_URL;
 const image = process.env.PUBLIC_URL;
@@ -41,15 +41,21 @@ const Dashboard = () => {
       setInput(""); // Clear the input field after sending
 
       try {
-        const response = await axios.post("http://localhost:5005/webhooks/rest/webhook", {
-          sender: "user", // Static sender ID, or generate dynamically
-          message: messageToSend,
-        });
+        const response = await axios.post(
+          "http://localhost:5005/webhooks/rest/webhook",
+          {
+            sender: "user", // Static sender ID, or generate dynamically
+            message: messageToSend,
+          }
+        );
+
         const botMessages = response.data.map((botMessage) => ({
           text: botMessage.text,
           buttons: botMessage.buttons || [], // Extract buttons if present
+          image: botMessage.image || "", // Extract image if present
           sender: "bot",
         }));
+
         setMessages((prevMessages) => [...prevMessages, ...botMessages]);
       } catch (error) {
         console.error("Error communicating with Rasa:", error);
@@ -93,12 +99,24 @@ const Dashboard = () => {
         <div className="chatbot-container">
           <div className="chatbot-header">
             <h4>Health Assistant</h4>
-            <button className="chatbot-close" onClick={handleChatClose}>X</button>
+            <button className="chatbot-close" onClick={handleChatClose}>
+              X
+            </button>
           </div>
           <div className="chatbot-messages" ref={chatMessagesRef}>
             {messages.map((msg, idx) => (
-              <div key={idx} className={msg.sender === "user" ? "user-message" : "bot-message"}>
+              <div
+                key={idx}
+                className={
+                  msg.sender === "user" ? "user-message" : "bot-message"
+                }
+              >
                 {msg.text}
+                {/* Display image if available */}
+                {msg.image && (
+                  <img src={msg.image} alt="Medicine" className="chat-image" />
+                )}
+
                 {/* Display buttons if available */}
                 {msg.buttons && (
                   <div className="chat-buttons">
