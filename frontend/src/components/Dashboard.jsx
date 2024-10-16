@@ -88,6 +88,7 @@ const Dashboard = () => {
           className="medicine-card"
           onClick={() => handleCardClick(medicine._id)}
         >
+          <img src={`${image}/${medicine.image}`} alt="Medicine Image" style={{height:'75%', maxWidth:"100%"}}/>
           <h3>{medicine.medicine_name}</h3>
           <p>Price: ${medicine.price}</p>
           <p>{medicine.description}</p>

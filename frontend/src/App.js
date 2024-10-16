@@ -6,10 +6,12 @@ import Dashboard from './components/Dashboard';
 import MedicineDetail from './components/MedicineDetail';
 import CartPage from './components/CartPage';
 import Checkout from './components/Checkout';
+import Navbar from './components/Navbar';
 
 const App = () => {
   return (
     <Router>
+      <Navbar/>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
