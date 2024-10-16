@@ -25,12 +25,30 @@ const MedicineDetail = () => {
     fetchMedicine();
   }, [id]);
 
-  const handleAddToCart = () => {
-    // Logic for adding the item to the cart
-    console.log(`Added ${quantity} of ${medicine.medicine_name} to cart.`);
+  const handleAddToCart = async () => {
+    const email = localStorage.getItem('email'); // Retrieve email from local storage
+    if (!email) {
+      console.error("User email not found in local storage.");
+      return;
+    }
 
-    // Redirect to the cart page
-    navigate("/cart");
+    const totalAmount = medicine.price * quantity;
+
+    try {
+      await axios.post(`${baseURL}/cart`, {
+        email,
+        medicineName: medicine.medicine_name,
+        totalAmount,
+        quantity
+      });
+
+      console.log(`Added ${quantity} of ${medicine.medicine_name} to cart.`);
+      
+      // Redirect to the cart page
+      navigate("/cart");
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+    }
   };
 
   const incrementQuantity = () => {

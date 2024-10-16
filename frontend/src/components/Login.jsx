@@ -27,8 +27,7 @@ const Login = () => {
       const data = response.data;
   
       if (data.success) {
-        // Store user data in localStorage or use context/state
-        localStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem('email', email);
         navigate('/dashboard');  // Redirect to dashboard on success
       } else {
         setError(data.message);  // Display error message if login failed
