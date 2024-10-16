@@ -76,9 +76,25 @@ class ActionMedicineDetails(Action):
             medicine = medicine_collection.find_one(query)
             
             if medicine:
+                # Construct the full image URL assuming images are served from the frontend public folder
+                base_url = "http://localhost:3000"  # Replace with your live domain if necessary
+                image_path = medicine.get('image', '')
+                full_image_url = f"{base_url}/{image_path}" if image_path else None
+                
+                # Fetch dosage, description, price
+                dosage = medicine.get('dosage', 'Not specified')
+                description = medicine.get('description', 'No description available.')
+                price = medicine.get('price', 'Price not available.')
+
+                # Display the image first if available
+                if full_image_url:
+                    dispatcher.utter_message(image=full_image_url)
+                
+                # Send medicine details including dosage
                 dispatcher.utter_message(
-                    text=f"The price of {medicine['medicine_name']} is {medicine['price']}. "
-                         f"Description: {medicine['description']}."
+                    text=f"The price of {medicine['medicine_name']} is {price}.\n"
+                         f"Description: {description}\n"
+                         f"Dosage: Take {dosage}."
                 )
                 return []
             else:

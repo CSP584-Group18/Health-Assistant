@@ -219,3 +219,10 @@
   font-size: 14px;
   padding: 10px;
 }
+
+.chat-image {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+  border-radius: 8px;
+}

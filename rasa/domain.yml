@@ -48,24 +48,35 @@ slots:
 responses:
   utter_greet:
     - text: "Hello! How can I assist you today?"
+
   utter_happy:
     - text: "I'm glad to hear you're feeling good!"
+
   utter_sad:
     - text: "I'm sorry to hear that. Could you please describe your symptoms so I can assist?"
+
   utter_select_severity:
     - text: "Please select the severity of your symptoms:"
+
   utter_provide_medicine:
     - text: "The recommended medicines are: {medicine_names}"
+
   utter_medicine_details:
-    - text: "The price of {selected_medicine} is {price}. Description: {description}."
+    - text: "The price of {selected_medicine} is {price}. Description: {description}. Dosage: Take {dosage}."
+      image: "{image}"  # Ensure this sends the image URL stored in the database
+
   utter_side_effects:
     - text: "The side effects of {selected_medicine} are: {side_effects}. Would you like to proceed with the purchase?"
+
   utter_goodbye:
     - text: "Goodbye! Take care."
+
   utter_confirm_purchase:
     - text: "Would you like to buy this medicine?"
+
   utter_redirect_checkout:
     - text: "Redirecting you to the checkout page. Please visit: [Checkout Page](http://your-react-app.com/checkout)"  # Update with actual URL
+
   utter_decline_purchase:
     - text: "Thank you! Is there anything else I can help you with?"
 
@@ -78,3 +89,6 @@ actions:
   - action_checkout
   - action_confirm_purchase  # Action to handle Yes/No responses and take respective actions
 
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

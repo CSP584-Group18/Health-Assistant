@@ -5,6 +5,7 @@ import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
 import MedicineDetail from './components/MedicineDetail';
 import CartPage from './components/CartPage';
+import Checkout from './components/Checkout';
 
 const App = () => {
   return (
