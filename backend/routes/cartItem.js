@@ -1,7 +1,7 @@
 const express = require('express');
 const CartItem = require('../models/CartItem');
 const router = express.Router();
-
+ 
 // Add item to cart
 router.post('/', async (req, res) => {
   const { email, medicineName, totalAmount, quantity } = req.body;
@@ -36,6 +36,20 @@ router.get('/', async (req, res) => {
     res.status(200).send(cartItems);
   } catch (error) {
     res.status(500).send({ error: 'Failed to retrieve cart items' });
+  }
+});
+
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deletedItem = await CartItem.findByIdAndDelete(id);
+    if (!deletedItem) {
+      return res.status(404).send({ error: 'Cart item not found' });
+    }
+    res.status(200).send({ message: 'Cart item deleted successfully' });
+  } catch (error) {
+    res.status(500).send({ error: 'Failed to delete cart item' });
   }
 });
 

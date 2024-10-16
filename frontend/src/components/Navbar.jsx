@@ -16,12 +16,11 @@ const Navbar = () => {
   return (
     <div className='navbar'>
         <div className="nav-logo">
-            <p>SHOPPER</p>
+            <p>Health Assistant</p>
         </div>
         <div className="nav-login-cart">
         <button onClick={handleLogout}>Logout</button>        
             <Link to='/cart'><img src={`${image}/Assets/Medicines/cart_icon.png`} alt="cart_icon" /></Link>
-            {/*  */}
         </div>
     </div>
   )

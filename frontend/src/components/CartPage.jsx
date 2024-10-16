@@ -1,30 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './CSS/CartPage.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./CSS/CartPage.css";
+import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const baseURL = process.env.REACT_APP_API_BASE_URL;
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchCartItems = async () => {
-      const email = localStorage.getItem('email'); 
+      const email = localStorage.getItem("email");
 
       if (!email) {
-        setError('User email not found. Please log in.');
+        setError("User email not found. Please log in.");
         setLoading(false);
         return;
       }
 
       try {
         const response = await axios.get(`${baseURL}/cart`, {
-          params: { email }
+          params: { email },
         });
         setCartItems(response.data);
       } catch (err) {
-        setError(err.response?.data?.error || 'Failed to fetch cart items');
+        setError(err.response?.data?.error || "Failed to fetch cart items");
       } finally {
         setLoading(false);
       }
@@ -33,26 +34,66 @@ const CartPage = () => {
     fetchCartItems();
   }, []);
 
+
+  const handleCheckOut = () => {
+    navigate("/checkout");
+  }
+  
+  const calculateTotalAmount = () => {
+    return cartItems.reduce((acc, item) => acc + item.totalAmount, 0).toFixed(2);
+  };
+
+  const handleCancelOrder = async (itemId) => {
+    try {
+      await axios.delete(`${baseURL}/cart/${itemId}`);
+      // Update the state to remove the deleted item from the UI
+      setCartItems(cartItems.filter(item => item._id !== itemId));
+    } catch (err) {
+      console.error("Failed to delete cart item", err);
+    }
+  };
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="cart-page">
-      <h1>Your Cart</h1>
-      {cartItems.length === 0 ? (
-        <p>Your cart is empty.</p>
-      ) : (
-        <ul className="cart-items-list">
+    <>
+      <div className="cart-page">
+        {cartItems.length === 0 ? (
+          <p>Your cart is empty.</p>
+        ) : (
+        <table className="order-table">
+          <thead>
+            <tr>
+              <th>Medicine Name</th>
+              <th>Quantity</th>
+              <th>Total Price</th>
+              <th>Cancel Order</th>
+            </tr>
+          </thead>
+          <tbody className="cart-items-list">
           {cartItems.map((item) => (
-            <li key={item._id} className="cart-item">
-              <h2>{item.medicineName}</h2>
-              <p>Quantity: {item.quantity}</p>
-              <p>Total Amount: ${item.totalAmount.toFixed(2)}</p>
-            </li>
-          ))}
-        </ul>
+              <tr key={item._id} className="cart-item">
+                <td>{item.medicineName}</td>
+                <td>{item.quantity}</td>
+                <td>${item.totalAmount.toFixed(2)}</td>
+                <td>
+                  <button className="cancel-button" onClick={() => handleCancelOrder(item._id)}>Cancel</button>
+               </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )}
-    </div>
+        <div className="check">
+        <div className="total-amount">
+          Total Amount: ${calculateTotalAmount()}
+        </div>
+
+        <button onClick={handleCheckOut} className="proceed-checkout">Proceed to Checkout</button>
+      </div>
+      </div>
+    </>
   );
 };
 

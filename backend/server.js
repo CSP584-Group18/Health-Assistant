@@ -12,7 +12,7 @@ connectDB();
 
 app.use(cors({
     origin: 'http://localhost:3000', // Your frontend URL
-    methods: ['GET', 'POST'], // Specify allowed methods
+    methods: ['GET', 'POST', 'DELETE'], // Specify allowed methods
     credentials: true // Allow credentials if needed (e.g., cookies)
 }));
 
