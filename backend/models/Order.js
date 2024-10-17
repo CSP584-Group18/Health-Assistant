@@ -32,9 +32,8 @@ const orderSchema = new mongoose.Schema({
   },
   items: [
     {
-      name: String,
+      medicineName: String,
       quantity: Number,
-      price: Number,
     },
   ],
   totalAmount: {

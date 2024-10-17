@@ -26,6 +26,7 @@ app.use('/api/conversations', require('./routes/conversations'));
 app.use('/api/symptoms', require('./routes/symptoms'));
 app.use('/api/cart', require('./routes/cartItem'));
 app.use('/api/orders', require('./routes/order'));
+app.use('/api/clear', require('./routes/clearCart'));
 
 // Chatbot endpoint
 app.post('/chat', async (req, res) => {
