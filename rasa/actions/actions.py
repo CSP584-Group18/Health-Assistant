@@ -57,7 +57,7 @@ class ActionProvideMedicine(Action):
                 if severity_data:
                     medicine_ids = severity_data["medicines"]
                     medicines = [medicine_collection.find_one({"_id": med_id}) for med_id in medicine_ids]
-                    medicine_names = [med["medicine_name"] for med in medicines if med]  # Added check to avoid NoneType error
+                    medicine_names = [med["medicine_name"] for med in medicines if med]
                     dispatcher.utter_message(text=f"The recommended medicines are: {', '.join(medicine_names)}")
                     return [SlotSet("medicine_ids", medicine_ids)]
         dispatcher.utter_message(text="Sorry, I couldn't find any matching medicines.")
@@ -71,26 +71,21 @@ class ActionMedicineDetails(Action):
         selected_medicine = tracker.get_slot('selected_medicine')
 
         if selected_medicine:
-            # Case-insensitive search for the medicine name
             query = {"medicine_name": {"$regex": f"^{selected_medicine}$", "$options": "i"}}
             medicine = medicine_collection.find_one(query)
             
             if medicine:
-                # Construct the full image URL assuming images are served from the frontend public folder
-                base_url = "http://localhost:3000"  # Replace with your live domain if necessary
+                base_url = "http://localhost:3000"
                 image_path = medicine.get('image', '')
                 full_image_url = f"{base_url}/{image_path}" if image_path else None
                 
-                # Fetch dosage, description, price
                 dosage = medicine.get('dosage', 'Not specified')
                 description = medicine.get('description', 'No description available.')
                 price = medicine.get('price', 'Price not available.')
 
-                # Display the image first if available
                 if full_image_url:
                     dispatcher.utter_message(image=full_image_url)
                 
-                # Send medicine details including dosage
                 dispatcher.utter_message(
                     text=f"The price of {medicine['medicine_name']} is {price}.\n"
                          f"Description: {description}\n"
@@ -112,12 +107,10 @@ class ActionProvideSideEffects(Action):
         selected_medicine = tracker.get_slot('selected_medicine')
 
         if selected_medicine:
-            # Query MongoDB for the selected medicine using case-insensitive search
             query = {"medicine_name": {"$regex": f"^{selected_medicine}$", "$options": "i"}}
             medicine = medicine_collection.find_one(query)
             
             if medicine:
-                # Check if the side_effects field exists and is populated
                 if "side_effects" in medicine and medicine['side_effects']:
                     side_effects = ", ".join(medicine['side_effects'])
                     dispatcher.utter_message(
@@ -128,7 +121,6 @@ class ActionProvideSideEffects(Action):
                         text=f"Sorry, side effects for {medicine['medicine_name']} are not available."
                     )
 
-                # Add Yes/No buttons for purchase confirmation
                 buttons = [
                     {"title": "Yes", "payload": '/confirm_purchase_yes_no{"response":"yes"}'},
                     {"title": "No", "payload": '/confirm_purchase_yes_no{"response":"no"}'}
@@ -148,17 +140,13 @@ class ActionConfirmPurchase(Action):
         user_response = tracker.get_slot('response')
         selected_medicine = tracker.get_slot('selected_medicine')
         
-        # Fetch the medicine ID from the MongoDB collection based on the selected medicine name
         query = {"medicine_name": {"$regex": f"^{selected_medicine}$", "$options": "i"}}
         medicine = medicine_collection.find_one(query)
         medId = medicine.get('_id', 'No ID Found')
 
         if user_response == "yes" and medId != 'No ID Found':
-            # Redirect user to the checkout page with the correct medicine ID
             checkout_url = f"http://localhost:3000/medicine/{medId}"
             dispatcher.utter_message(text=f"Please visit: [Checkout Page]({checkout_url})")
         else:
-            # Thank the user and ask how else the bot can help
             dispatcher.utter_message(text="Thank you! How may I assist you further?")
-        
         return []

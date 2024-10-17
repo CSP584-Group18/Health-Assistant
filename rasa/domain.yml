@@ -10,13 +10,13 @@ intents:
   - ask_side_effects
   - confirm_purchase
   - goodbye
-  - confirm_purchase_yes_no  # Intent to handle Yes/No response for purchase confirmation
+  - confirm_purchase_yes_no
 
 entities:
   - symptoms
   - severity
   - medicine_name
-  - response  # Entity to capture Yes/No responses
+  - response
 
 slots:
   symptoms:
@@ -39,7 +39,7 @@ slots:
     mappings:
       - type: from_entity
         entity: medicine_name
-  response:  # Slot to capture the user's response (Yes/No) to purchase confirmation
+  response:
     type: text
     mappings:
       - type: from_entity
@@ -63,7 +63,7 @@ responses:
 
   utter_medicine_details:
     - text: "The price of {selected_medicine} is {price}. Description: {description}. Dosage: Take {dosage}."
-      image: "{image}"  # Ensure this sends the image URL stored in the database
+      image: "{image}"
 
   utter_side_effects:
     - text: "The side effects of {selected_medicine} are: {side_effects}. Would you like to proceed with the purchase?"
@@ -75,7 +75,7 @@ responses:
     - text: "Would you like to buy this medicine?"
 
   utter_redirect_checkout:
-    - text: "Redirecting you to the checkout page. Please visit: [Checkout Page](http://your-react-app.com/checkout)"  # Update with actual URL
+    - text: "Please visit: [Checkout Page](http://localhost:3000/medicine/medId)"
 
   utter_decline_purchase:
     - text: "Thank you! Is there anything else I can help you with?"
@@ -87,7 +87,7 @@ actions:
   - action_medicine_details
   - action_provide_side_effects
   - action_checkout
-  - action_confirm_purchase  # Action to handle Yes/No responses and take respective actions
+  - action_confirm_purchase
 
 session_config:
   session_expiration_time: 60
