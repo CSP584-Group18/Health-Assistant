@@ -146,12 +146,19 @@ class ActionConfirmPurchase(Action):
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: dict) -> list:
         user_response = tracker.get_slot('response')
+        selected_medicine = tracker.get_slot('selected_medicine')
+        
+        # Fetch the medicine ID from the MongoDB collection based on the selected medicine name
+        query = {"medicine_name": {"$regex": f"^{selected_medicine}$", "$options": "i"}}
+        medicine = medicine_collection.find_one(query)
+        medId = medicine.get('_id', 'No ID Found')
 
-        if user_response == "yes":
-            # Redirect user to the checkout page
-            dispatcher.utter_message(text="Redirecting you to the checkout page...")
-            dispatcher.utter_message(text="Please visit: [Checkout Page](http://your-react-app.com/checkout)")  # Replace with your React app's checkout URL
+        if user_response == "yes" and medId != 'No ID Found':
+            # Redirect user to the checkout page with the correct medicine ID
+            checkout_url = f"http://localhost:3000/medicine/{medId}"
+            dispatcher.utter_message(text=f"Please visit: [Checkout Page]({checkout_url})")
         else:
             # Thank the user and ask how else the bot can help
             dispatcher.utter_message(text="Thank you! How may I assist you further?")
+        
         return []
