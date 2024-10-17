@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './CSS/Checkout.css';
 
 const Checkout = () => {
+  const location = useLocation();
+  const baseURL = process.env.REACT_APP_API_BASE_URL;
+  const navigate = useNavigate();
+  const cart = location.state || { items: [], totalAmount: 0 };  // Get the cart data from CartPage
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -23,16 +29,42 @@ const Checkout = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const clearCart = async () => {
+    const email = localStorage.getItem('email');
+    try {
+      // Assuming your API endpoint to clear the cart is `/api/cart/clear`
+      await axios.delete(`${baseURL}/clear`, {
+        params: { email },
+      });
+      alert('Cart has been cleared.');
+    } catch (error) {
+      console.error('Error clearing cart:', error);
+      alert('Error clearing the cart.');
+    }
+  };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const orderData = {
+      customerName: formData.name,
+      email: formData.email,
+      creditCard: formData.creditCard,
+      deliveryOption: formData.deliveryOption,
+      address: formData.deliveryOption === 'delivery' ? formData.address : '',
+      store: formData.deliveryOption === 'pickup' ? formData.store : '',
+      items: cart.items, // Attach cart items from CartPage
+      totalAmount: cart.totalAmount, // Attach total amount from CartPage
+    };
+     
     try {
-      const response = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+      const response = await axios.post(`${baseURL}/orders`, orderData, {
+        headers: { 'Content-Type': 'application/json' }
       });
-      if (response.ok) {
+
+      if (response.status === 201) {
         alert('Order placed successfully!');
+        await clearCart(); 
+        navigate('/order-success'); // Or any other route you'd prefer
       } else {
         alert('Something went wrong. Please try again.');
       }
@@ -43,84 +75,85 @@ const Checkout = () => {
   };
 
   return (
-    <div class="checkout-page">
-    <form onSubmit={handleSubmit}>
-      <h2>Checkout</h2>
-      <div>
-        <label>Name:</label>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Email:</label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Credit Card:</label>
-        <input
-          type="text"
-          name="creditCard"
-          value={formData.creditCard}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label>Delivery Option:</label>
-        <select
-          name="deliveryOption"
-          value={formData.deliveryOption}
-          onChange={handleChange}
-        >
-          <option value="delivery">Delivery</option>
-          <option value="pickup">Store Pickup</option>
-        </select>
-      </div>
-
-      {formData.deliveryOption === 'pickup' && (
+    <div className="checkout-page">
+      <form onSubmit={handleSubmit}>
+        <h2>Checkout</h2>
         <div>
-          <label>Select Store:</label>
-          <select
-            name="store"
-            value={formData.store}
-            onChange={handleChange}
-            required
-          >
-            <option value="">-- Select a Store --</option>
-            {stores.map((store) => (
-              <option key={store.id} value={store.name}>
-                {store.name}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
-
-      {formData.deliveryOption === 'delivery' && (
-        <div>
-          <label>Address:</label>
+          <label>Name:</label>
           <input
             type="text"
-            name="address"
-            value={formData.address}
+            name="name"
+            value={formData.name}
             onChange={handleChange}
             required
           />
         </div>
-      )}
-      <button type="submit">Place Order</button>
-    </form>
+        <div>
+          <label>Email:</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Credit Card:</label>
+          <input
+            type="text"
+            name="creditCard"
+            value={formData.creditCard}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Delivery Option:</label>
+          <select
+            name="deliveryOption"
+            value={formData.deliveryOption}
+            onChange={handleChange}
+          >
+            <option value="delivery">Delivery</option>
+            <option value="pickup">Store Pickup</option>
+          </select>
+        </div>
+
+        {formData.deliveryOption === 'pickup' && (
+          <div>
+            <label>Select Store:</label>
+            <select
+              name="store"
+              value={formData.store}
+              onChange={handleChange}
+              required
+            >
+              <option value="">-- Select a Store --</option>
+              {stores.map((store) => (
+                <option key={store.id} value={store.name}>
+                  {store.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        {formData.deliveryOption === 'delivery' && (
+          <div>
+            <label>Address:</label>
+            <input
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        )}
+
+        <button type="submit">Place Order</button>
+      </form>
     </div>
   );
 };

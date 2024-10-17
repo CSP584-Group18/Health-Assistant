@@ -7,6 +7,7 @@ import MedicineDetail from './components/MedicineDetail';
 import CartPage from './components/CartPage';
 import Checkout from './components/Checkout';
 import Navbar from './components/Navbar';
+import OrderPage from './components/OrderPage';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/medicine/:id" element={<MedicineDetail />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path='/order' element={<OrderPage/>} />
       </Routes>
     </Router>
   );

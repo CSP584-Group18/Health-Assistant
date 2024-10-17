@@ -36,9 +36,12 @@ const CartPage = () => {
 
 
   const handleCheckOut = () => {
-    navigate("/checkout");
+    const cartData = {
+      items: cartItems,
+      totalAmount: calculateTotalAmount(),
+    };
+    navigate("/checkout", { state: cartData });
   }
-  
   const calculateTotalAmount = () => {
     return cartItems.reduce((acc, item) => acc + item.totalAmount, 0).toFixed(2);
   };
