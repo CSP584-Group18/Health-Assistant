@@ -57,7 +57,7 @@ const Signup = () => {
       <h2>Sign Up</h2>
       {error && <p className="error-message">{error}</p>}
       {successMessage && <p className="success-message">{successMessage}</p>}
-      <form onSubmit={handleSubmit}>
+      <form className="form" onSubmit={handleSubmit}>
         <div>
           <label>First Name:</label>
           <input

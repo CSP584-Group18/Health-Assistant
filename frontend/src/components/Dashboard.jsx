@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./CSS/MedicineCard.css";
 import Navbar from "./Navbar";
+import { IoIosSend } from "react-icons/io";
 
 const baseURL = process.env.REACT_APP_API_BASE_URL;
 const image = process.env.PUBLIC_URL;
@@ -146,7 +147,7 @@ const Dashboard = () => {
                 onKeyPress={(e) => e.key === "Enter" && sendMessage()}
                 placeholder="Type a message..."
               />
-              <button onClick={() => sendMessage()}>Send</button>
+              <button style={{height:"40px", width:"50px"}}onClick={() => sendMessage()}><IoIosSend size={20}/></button>
             </div>
           </div>
         ) : (
