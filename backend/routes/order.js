@@ -25,4 +25,22 @@ router.post('/', async (req, res) => {
   }
 });
 
+
+router.get('/:email', async (req, res) => {
+  const { email } = req.params;
+
+  try {
+    const userOrders = await Order.find({ email });
+
+    if (userOrders.length === 0) {
+      return res.status(404).json({ message: 'No orders found for this user' });
+    }
+
+    res.status(200).json(userOrders);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to retrieve orders', error });
+  }
+});
+
 module.exports = router;
