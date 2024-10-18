@@ -1,99 +1,99 @@
 .medicine-detail {
-    max-width: 700px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .medicine-detail h1 {
-    font-size: 2.5rem;
-    color: #343a40;
-    margin-bottom: 20px;
-    text-align: center;
+  font-size: 2.5rem;
+  color: #343a40;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .medicine-detail .info-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    font-size: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
 }
 
 .medicine-detail .info-label {
-    font-weight: bold;
-    color: #343a40;
+  font-weight: bold;
+  color: #343a40;
 }
 
 .medicine-detail .info-value {
-    color: #495057;
-    text-align: right;
+  color: #495057;
+  text-align: right;
 }
 
 .medicine-detail ul {
-    list-style-type: disc;
-    margin-left: 20px;
-    color: #6c757d;
-    font-size: 1rem;
-    margin-bottom: 20px;
+  list-style-type: disc;
+  margin-left: 20px;
+  color: #6c757d;
+  font-size: 1rem;
+  margin-bottom: 20px;
 }
 
 .quantity-selector {
-    display: flex;
-    align-items: center;
-    margin: 20px 0;
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
 }
 
 .quantity-selector label {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #495057;
-    margin-right: 10px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #495057;
+  margin-right: 10px;
 }
 
 .quantity-selector button {
-    padding: 8px 14px;
-    font-size: 1.2rem;
-    color: white;
-    background-color: #007bff; 
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin: 0 5px;
+  padding: 8px 14px;
+  font-size: 1.2rem;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px;
 }
 
 .quantity-selector button:hover,
 .quantity-selector button:focus {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 .quantity-selector input {
-    width: 50px;
-    text-align: center;
-    border: 1px solid #ced4da; 
-    border-radius: 4px; 
-    font-size: 1.1rem; 
-    padding: 5px; 
+  width: 50px;
+  text-align: center;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  padding: 5px;
 }
 
 .add-to-cart {
-    padding: 12px 20px; 
-    font-size: 1.2rem; 
-    background-color: #28a745; 
-    color: white; 
-    border: none; 
-    border-radius: 5px; 
-    cursor: pointer; 
-    margin-top: 20px; 
-    width: 100%; 
-    transition: background-color 0.3s ease; 
+  padding: 12px 20px;
+  font-size: 1.2rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  width: 100%;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-   background-color: #218838; 
+  background-color: #218838;
 }
 
 button:active {
-   background-color: #1e7e34; 
+  background-color: #1e7e34;
 }

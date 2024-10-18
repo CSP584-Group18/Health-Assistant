@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
   customerName: {
@@ -15,19 +15,19 @@ const orderSchema = new mongoose.Schema({
   },
   deliveryOption: {
     type: String,
-    enum: ['delivery', 'pickup'],
+    enum: ["delivery", "pickup"],
     required: true,
   },
   address: {
     type: String,
     required: function () {
-      return this.deliveryOption === 'delivery';
+      return this.deliveryOption === "delivery";
     },
   },
   store: {
     type: String,
     required: function () {
-      return this.deliveryOption === 'pickup';
+      return this.deliveryOption === "pickup";
     },
   },
   items: [
@@ -42,8 +42,8 @@ const orderSchema = new mongoose.Schema({
   },
   orderStatus: {
     type: String,
-    enum: ['pending', 'shipped', 'completed', 'cancelled'],
-    default: 'pending',
+    enum: ["pending", "shipped", "completed", "cancelled"],
+    default: "pending",
   },
   createdAt: {
     type: Date,
@@ -51,4 +51,4 @@ const orderSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('Order', orderSchema);
+module.exports = mongoose.model("Order", orderSchema);

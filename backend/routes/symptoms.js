@@ -1,8 +1,8 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Symptom = require('../models/Symptom');
+const Symptom = require("../models/Symptom");
 
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   const { symptoms, severity, frequency } = req.body;
 
   try {
@@ -10,14 +10,14 @@ router.post('/', async (req, res) => {
       userId: req.user.id,
       symptoms,
       severity,
-      frequency
+      frequency,
     });
 
     await symptomEntry.save();
     res.json(symptomEntry);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).send("Server error");
   }
 });
 

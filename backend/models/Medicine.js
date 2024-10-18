@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const medicineSchema = new mongoose.Schema({
   _id: String,
@@ -9,4 +9,4 @@ const medicineSchema = new mongoose.Schema({
   dosage: String,
 });
 
-module.exports = mongoose.model('Medicine', medicineSchema);
+module.exports = mongoose.model("Medicine", medicineSchema);

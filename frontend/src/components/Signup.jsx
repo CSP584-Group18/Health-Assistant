@@ -30,15 +30,11 @@ const Signup = () => {
     setSuccessMessage("");
 
     try {
-      const response = await axios.post(
-        `${baseURL}/auth/register`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.post(`${baseURL}/auth/register`, formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       const data = response.data;
 
@@ -114,7 +110,7 @@ const Signup = () => {
         </div>
         <button type="submit">Sign Up</button>
       </form>
-      <p style={{marginTop:'15px'}}>
+      <p style={{ marginTop: "15px" }}>
         Already have an account? <a href="/login">Log in here</a>
       </p>
     </div>
