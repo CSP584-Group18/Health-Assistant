@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./CSS/MedicineDetail.css";
-
+import Navbar from "./Navbar";
 const baseURL = process.env.REACT_APP_API_BASE_URL;
 const image = process.env.PUBLIC_URL;
 
@@ -65,6 +65,8 @@ const MedicineDetail = () => {
   const totalAmount = medicine.price * quantity;
 
   return (
+    <>
+    <Navbar/>
     <div className="medicine-detail">
       <h1>{medicine.medicine_name}</h1>
       <div className="info-section">
@@ -107,6 +109,7 @@ const MedicineDetail = () => {
         Add to Cart
       </button>
     </div>
+    </>
   );
 };
 

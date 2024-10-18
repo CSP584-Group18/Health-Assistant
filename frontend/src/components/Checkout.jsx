@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './CSS/Checkout.css';
+import Navbar from './Navbar';
 
 const Checkout = () => {
   const location = useLocation();
@@ -75,6 +76,8 @@ const Checkout = () => {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="checkout-page">
       <form onSubmit={handleSubmit}>
         <h2>Checkout</h2>
@@ -155,6 +158,7 @@ const Checkout = () => {
         <button type="submit">Place Order</button>
       </form>
     </div>
+    </>
   );
 };
 
