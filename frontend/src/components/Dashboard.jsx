@@ -34,6 +34,10 @@ const Dashboard = () => {
     navigate(`/medicine/${id}`);
   };
 
+  const handlePurchaseClick = (checkoutUrl) => {
+    window.open(checkoutUrl, "_blank");
+  };
+
   const sendMessage = async (messagePayload) => {
     const messageToSend = messagePayload || input;
 
@@ -116,7 +120,7 @@ const Dashboard = () => {
                     msg.sender === "user" ? "user-message" : "bot-message"
                   }
                 >
-                  {msg.text}
+                  {msg.text && msg.text}
                   {msg.image && (
                     <img
                       src={msg.image}
@@ -136,6 +140,21 @@ const Dashboard = () => {
                       ))}
                     </div>
                   )}
+                  {msg.buttons && (
+                    <div className="chat-buttons">
+                      {msg.text && msg.text.includes("Checkout Page") && (
+                        <button
+                          onClick={() =>
+                            handlePurchaseClick(
+                              msg.text.match(/http[s]?:\/\/[^\s\)]+/g)[0]
+                            )
+                          }
+                        >
+                          Complete Purchase
+                        </button>
+                      )}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -147,7 +166,12 @@ const Dashboard = () => {
                 onKeyPress={(e) => e.key === "Enter" && sendMessage()}
                 placeholder="Type a message..."
               />
-              <button style={{height:"40px", width:"50px"}}onClick={() => sendMessage()}><IoIosSend size={20}/></button>
+              <button
+                style={{ height: "40px", width: "50px" }}
+                onClick={() => sendMessage()}
+              >
+                <IoIosSend size={20} />
+              </button>
             </div>
           </div>
         ) : (
