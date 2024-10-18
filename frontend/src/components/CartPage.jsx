@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./CSS/CartPage.css";
 import { useNavigate } from "react-router-dom";
-import Navbar from './Navbar';
+import Navbar from "./Navbar";
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -27,7 +27,7 @@ const CartPage = () => {
         });
         setCartItems(response.data);
       } catch (err) {
-        console.error("Error fetching cart items:", err); 
+        console.error("Error fetching cart items:", err);
       } finally {
         setLoading(false);
       }
@@ -64,7 +64,7 @@ const CartPage = () => {
 
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <div className="cart-page">
         {cartItems.length === 0 ? (
           <p>Your cart is empty.</p>

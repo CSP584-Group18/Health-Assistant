@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from './Navbar';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import Navbar from "./Navbar";
+import axios from "axios";
 import "./CSS/OrderPage.css";
 
 export default function OrderPage() {
@@ -8,12 +8,12 @@ export default function OrderPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const baseURL = process.env.REACT_APP_API_BASE_URL;
-  
+
   const fetchOrders = async () => {
     try {
-      const userEmail = localStorage.getItem('email'); 
+      const userEmail = localStorage.getItem("email");
       if (!userEmail) {
-        throw new Error('User email not found');
+        throw new Error("User email not found");
       }
 
       const response = await axios.get(`${baseURL}/orders/${userEmail}`);

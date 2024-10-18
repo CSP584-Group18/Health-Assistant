@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./CSS/MedicineCard.css";
-import Navbar from './Navbar';
+import Navbar from "./Navbar";
 
 const baseURL = process.env.REACT_APP_API_BASE_URL;
 const image = process.env.PUBLIC_URL;
@@ -11,8 +11,8 @@ const Dashboard = () => {
   const [medicines, setMedicines] = useState([]);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
-  const [isChatOpen, setIsChatOpen] = useState(false); 
-  const chatMessagesRef = useRef(null); 
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const chatMessagesRef = useRef(null);
 
   const navigate = useNavigate();
 
@@ -39,21 +39,21 @@ const Dashboard = () => {
     if (messageToSend.trim()) {
       const userMessage = { text: messageToSend, sender: "user" };
       setMessages((prevMessages) => [...prevMessages, userMessage]);
-      setInput(""); 
+      setInput("");
 
       try {
         const response = await axios.post(
           "http://localhost:5005/webhooks/rest/webhook",
           {
-            sender: "user", 
+            sender: "user",
             message: messageToSend,
           }
         );
 
         const botMessages = response.data.map((botMessage) => ({
           text: botMessage.text,
-          buttons: botMessage.buttons || [], 
-          image: botMessage.image || "", 
+          buttons: botMessage.buttons || [],
+          image: botMessage.image || "",
           sender: "bot",
         }));
 
@@ -76,77 +76,85 @@ const Dashboard = () => {
 
   const handleChatClose = () => {
     setIsChatOpen(false);
-    setMessages([]); 
+    setMessages([]);
   };
 
   return (
     <>
-    <Navbar/>
-    <div className="medicine-dashboard">
-      {medicines.map((medicine) => (
-        <div
-          key={medicine._id}
-          className="medicine-card"
-          onClick={() => handleCardClick(medicine._id)}
-        >
-          <img src={`${image}/${medicine.image}`} alt="Medicine Image" style={{height:'75%', maxWidth:"100%"}}/>
-          <h3>{medicine.medicine_name}</h3>
-          <p>Price: ${medicine.price}</p>
-          <p>{medicine.description}</p>
-        </div>
-      ))}
-      {isChatOpen ? (
-        <div className="chatbot-container">
-          <div className="chatbot-header">
-            <h4>Health Assistant</h4>
-            <button className="chatbot-close" onClick={handleChatClose}>
-              X
-            </button>
-          </div>
-          <div className="chatbot-messages" ref={chatMessagesRef}>
-            {messages.map((msg, idx) => (
-              <div
-                key={idx}
-                className={
-                  msg.sender === "user" ? "user-message" : "bot-message"
-                }
-              >
-                {msg.text}
-                {msg.image && (
-                  <img src={msg.image} alt="Medicine" className="chat-image" />
-                )}
-                {msg.buttons && (
-                  <div className="chat-buttons">
-                    {msg.buttons.map((button, index) => (
-                      <button
-                        key={index}
-                        onClick={() => handleButtonClick(button.payload)}
-                      >
-                        {button.title}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-          <div className="chatbot-input">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyPress={(e) => e.key === "Enter" && sendMessage()}
-              placeholder="Type a message..."
+      <Navbar />
+      <div className="medicine-dashboard">
+        {medicines.map((medicine) => (
+          <div
+            key={medicine._id}
+            className="medicine-card"
+            onClick={() => handleCardClick(medicine._id)}
+          >
+            <img
+              src={`${image}/${medicine.image}`}
+              alt="Medicine Image"
+              style={{ height: "75%", maxWidth: "100%" }}
             />
-            <button onClick={() => sendMessage()}>Send</button>
+            <h3>{medicine.medicine_name}</h3>
+            <p>Price: ${medicine.price}</p>
+            <p>{medicine.description}</p>
           </div>
-        </div>
-      ) : (
-        <div className="chatbot-icon" onClick={() => setIsChatOpen(true)}>
-          💬
-        </div>
-      )}
-    </div>
+        ))}
+        {isChatOpen ? (
+          <div className="chatbot-container">
+            <div className="chatbot-header">
+              <h4>Health Assistant</h4>
+              <button className="chatbot-close" onClick={handleChatClose}>
+                X
+              </button>
+            </div>
+            <div className="chatbot-messages" ref={chatMessagesRef}>
+              {messages.map((msg, idx) => (
+                <div
+                  key={idx}
+                  className={
+                    msg.sender === "user" ? "user-message" : "bot-message"
+                  }
+                >
+                  {msg.text}
+                  {msg.image && (
+                    <img
+                      src={msg.image}
+                      alt="Medicine"
+                      className="chat-image"
+                    />
+                  )}
+                  {msg.buttons && (
+                    <div className="chat-buttons">
+                      {msg.buttons.map((button, index) => (
+                        <button
+                          key={index}
+                          onClick={() => handleButtonClick(button.payload)}
+                        >
+                          {button.title}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+            <div className="chatbot-input">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyPress={(e) => e.key === "Enter" && sendMessage()}
+                placeholder="Type a message..."
+              />
+              <button onClick={() => sendMessage()}>Send</button>
+            </div>
+          </div>
+        ) : (
+          <div className="chatbot-icon" onClick={() => setIsChatOpen(true)}>
+            💬
+          </div>
+        )}
+      </div>
     </>
   );
 };
