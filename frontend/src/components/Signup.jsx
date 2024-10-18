@@ -114,7 +114,7 @@ const Signup = () => {
         </div>
         <button type="submit">Sign Up</button>
       </form>
-      <p>
+      <p style={{marginTop:'15px'}}>
         Already have an account? <a href="/login">Log in here</a>
       </p>
     </div>

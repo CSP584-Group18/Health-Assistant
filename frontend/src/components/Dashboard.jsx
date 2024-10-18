@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./CSS/MedicineCard.css"; // Your existing CSS file
+import "./CSS/MedicineCard.css";
+import Navbar from './Navbar';
 
 const baseURL = process.env.REACT_APP_API_BASE_URL;
 const image = process.env.PUBLIC_URL;
@@ -80,6 +81,8 @@ const Dashboard = () => {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="medicine-dashboard">
       {/* Medicine Cards */}
       {medicines.map((medicine) => (
@@ -151,6 +154,7 @@ const Dashboard = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 
