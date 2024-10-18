@@ -8,7 +8,7 @@ const Checkout = () => {
   const location = useLocation();
   const baseURL = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
-  const cart = location.state || { items: [], totalAmount: 0 };  // Get the cart data from CartPage
+  const cart = location.state || { items: [], totalAmount: 0 }; 
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -33,7 +33,6 @@ const Checkout = () => {
   const clearCart = async () => {
     const email = localStorage.getItem('email');
     try {
-      // Assuming your API endpoint to clear the cart is `/api/cart/clear`
       await axios.delete(`${baseURL}/clear`, {
         params: { email },
       });
@@ -53,8 +52,8 @@ const Checkout = () => {
       deliveryOption: formData.deliveryOption,
       address: formData.deliveryOption === 'delivery' ? formData.address : '',
       store: formData.deliveryOption === 'pickup' ? formData.store : '',
-      items: cart.items, // Attach cart items from CartPage
-      totalAmount: cart.totalAmount, // Attach total amount from CartPage
+      items: cart.items, 
+      totalAmount: cart.totalAmount, 
     };
      
     try {
@@ -65,7 +64,7 @@ const Checkout = () => {
       if (response.status === 201) {
         alert('Order placed successfully!');
         await clearCart(); 
-        navigate('/order-success'); // Or any other route you'd prefer
+        navigate('/order-success'); 
       } else {
         alert('Something went wrong. Please try again.');
       }

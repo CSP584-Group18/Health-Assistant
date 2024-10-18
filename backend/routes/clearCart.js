@@ -1,10 +1,7 @@
-// Assuming you have a Cart model
 const express = require('express');
 const router = express.Router();
 const CartItem = require('../models/CartItem');
 
-// @route DELETE /api/cart/clear
-// @desc Clear cart for a specific user
 router.delete('/', async (req, res) => {
     const { email } = req.query;
   
@@ -13,7 +10,6 @@ router.delete('/', async (req, res) => {
     }
   
     try {
-      // Find the user's cart by email and remove it
       const result = await CartItem.deleteMany({ email });
   
       if (result.deletedCount === 0) {

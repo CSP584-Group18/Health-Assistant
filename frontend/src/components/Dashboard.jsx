@@ -11,8 +11,8 @@ const Dashboard = () => {
   const [medicines, setMedicines] = useState([]);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
-  const [isChatOpen, setIsChatOpen] = useState(false); // Chat window state
-  const chatMessagesRef = useRef(null); // To handle auto-scroll
+  const [isChatOpen, setIsChatOpen] = useState(false); 
+  const chatMessagesRef = useRef(null); 
 
   const navigate = useNavigate();
 
@@ -39,21 +39,21 @@ const Dashboard = () => {
     if (messageToSend.trim()) {
       const userMessage = { text: messageToSend, sender: "user" };
       setMessages((prevMessages) => [...prevMessages, userMessage]);
-      setInput(""); // Clear the input field after sending
+      setInput(""); 
 
       try {
         const response = await axios.post(
           "http://localhost:5005/webhooks/rest/webhook",
           {
-            sender: "user", // Static sender ID, or generate dynamically
+            sender: "user", 
             message: messageToSend,
           }
         );
 
         const botMessages = response.data.map((botMessage) => ({
           text: botMessage.text,
-          buttons: botMessage.buttons || [], // Extract buttons if present
-          image: botMessage.image || "", // Extract image if present
+          buttons: botMessage.buttons || [], 
+          image: botMessage.image || "", 
           sender: "bot",
         }));
 
@@ -68,7 +68,6 @@ const Dashboard = () => {
     sendMessage(payload);
   };
 
-  // Automatically scroll to the latest message
   useEffect(() => {
     if (chatMessagesRef.current) {
       chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
@@ -77,14 +76,13 @@ const Dashboard = () => {
 
   const handleChatClose = () => {
     setIsChatOpen(false);
-    setMessages([]); // Clear the chat when closing
+    setMessages([]); 
   };
 
   return (
     <>
     <Navbar/>
     <div className="medicine-dashboard">
-      {/* Medicine Cards */}
       {medicines.map((medicine) => (
         <div
           key={medicine._id}
@@ -97,8 +95,6 @@ const Dashboard = () => {
           <p>{medicine.description}</p>
         </div>
       ))}
-
-      {/* Chatbot Icon and Window */}
       {isChatOpen ? (
         <div className="chatbot-container">
           <div className="chatbot-header">
@@ -116,12 +112,9 @@ const Dashboard = () => {
                 }
               >
                 {msg.text}
-                {/* Display image if available */}
                 {msg.image && (
                   <img src={msg.image} alt="Medicine" className="chat-image" />
                 )}
-
-                {/* Display buttons if available */}
                 {msg.buttons && (
                   <div className="chat-buttons">
                     {msg.buttons.map((button, index) => (

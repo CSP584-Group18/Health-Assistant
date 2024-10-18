@@ -4,7 +4,6 @@ import axios from "axios";
 import "./CSS/MedicineDetail.css";
 import Navbar from "./Navbar";
 const baseURL = process.env.REACT_APP_API_BASE_URL;
-const image = process.env.PUBLIC_URL;
 
 const MedicineDetail = () => {
   const { id } = useParams();
@@ -26,7 +25,7 @@ const MedicineDetail = () => {
   }, [id]);
 
   const handleAddToCart = async () => {
-    const email = localStorage.getItem('email'); // Retrieve email from local storage
+    const email = localStorage.getItem('email');
     if (!email) {
       console.error("User email not found in local storage.");
       return;
@@ -44,7 +43,6 @@ const MedicineDetail = () => {
 
       console.log(`Added ${quantity} of ${medicine.medicine_name} to cart.`);
       
-      // Redirect to the cart page
       navigate("/cart");
     } catch (error) {
       console.error("Error adding item to cart:", error);
@@ -61,7 +59,6 @@ const MedicineDetail = () => {
 
   if (!medicine) return <div>Loading...</div>;
 
-  // Calculate total amount
   const totalAmount = medicine.price * quantity;
 
   return (
@@ -91,7 +88,6 @@ const MedicineDetail = () => {
         ))}
       </ul>
 
-      {/* Quantity Selector */}
       <div className="quantity-selector">
         <label htmlFor="quantity">Quantity:</label>
         <button onClick={decrementQuantity}>-</button>
@@ -99,12 +95,9 @@ const MedicineDetail = () => {
         <button onClick={incrementQuantity}>+</button>
       </div>
 
-      {/* Total Amount */}
       <div className="total-amount">
         <strong>Total Amount: </strong>${totalAmount.toFixed(2)}
       </div>
-
-      {/* Add to Cart Button */}
       <button className="add-to-cart" onClick={handleAddToCart}>
         Add to Cart
       </button>
