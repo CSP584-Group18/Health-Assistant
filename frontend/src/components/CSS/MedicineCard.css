@@ -4,7 +4,7 @@
   gap: 20px; 
   margin: 0 auto;
   max-width: 1200px;
-  position: relative; /* Ensures dashboard stays scrollable with chatbot */
+  position: relative;
 }
 
 .medicine-card {
@@ -46,7 +46,6 @@
   }
 }
 
-/* Styles for the chatbot icon and chat window */
 .chatbot-icon {
   position: fixed;
   bottom: 20px;
@@ -61,7 +60,7 @@
   justify-content: center;
   cursor: pointer;
   font-size: 30px;
-  z-index: 1000; /* Ensures it is above the content */
+  z-index: 1000; 
 }
 
 .chatbot-container {
@@ -75,7 +74,7 @@
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  z-index: 1001; /* On top of the chat icon */
+  z-index: 1001;
 }
 
 .chatbot-header {
@@ -101,7 +100,7 @@
   padding: 10px;
   overflow-y: auto;
   background-color: #f4f4f4;
-  scroll-behavior: smooth; /* Smooth scroll to the bottom */
+  scroll-behavior: smooth;
 }
 
 .user-message {
@@ -144,7 +143,6 @@
   cursor: pointer;
 }
 
-/* Styles for chat buttons in bot responses */
 .chat-buttons {
   display: flex;
   flex-direction: row;
@@ -165,14 +163,12 @@
   background-color: #0056b3;
 }
 
-/* Ensure that the chat messages have padding and margins for better readability */
 .user-message, .bot-message {
   padding: 10px;
   margin: 5px 0;
   border-radius: 10px;
 }
 
-/* Chatbot response messages */
 .user-message {
   background-color: #007bff;
   color: white;
@@ -184,7 +180,6 @@
   text-align: left;
 }
 
-/* Scrollbar customization for chatbot */
 .chatbot-messages::-webkit-scrollbar {
   width: 5px;
 }
@@ -202,9 +197,8 @@
   background: #555;
 }
 
-/* Additional improvements */
 .chatbot-messages {
-  max-height: 70%; /* Prevent overflow */
+  max-height: 70%; 
 }
 
 .chatbot-input input {

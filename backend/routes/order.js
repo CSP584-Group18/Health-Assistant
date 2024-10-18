@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order');
 
-// @route   POST /api/orders
-// @desc    Create a new order
 router.post('/', async (req, res) => {
   const { customerName, email, creditCard, deliveryOption, address, store, items, totalAmount } = req.body;
 

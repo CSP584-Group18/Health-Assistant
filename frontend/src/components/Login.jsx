@@ -28,9 +28,9 @@ const Login = () => {
   
       if (data.success) {
         localStorage.setItem('email', email);
-        navigate('/dashboard');  // Redirect to dashboard on success
+        navigate('/dashboard');
       } else {
-        setError(data.message);  // Display error message if login failed
+        setError(data.message);  
       }
     } catch (err) {
       console.error('Error:', err);

@@ -2,7 +2,6 @@ const express = require('express');
 const CartItem = require('../models/CartItem');
 const router = express.Router();
  
-// Add item to cart
 router.post('/', async (req, res) => {
   const { email, medicineName, totalAmount, quantity } = req.body;
 
@@ -21,16 +20,14 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Get all items in the cart for a specific user
 router.get('/', async (req, res) => {
-  const { email } = req.query; // Assuming email is passed as a query parameter
+  const { email } = req.query; 
 
   try {
-    // Find all cart items for the provided email
     const cartItems = await CartItem.find({ email });
     
     if (cartItems.length === 0) {
-      return res.status(404).send({ error: 'No items found for this user' });
+      return res.status(404).send("Your cart is empty.");
     }
 
     res.status(200).send(cartItems);
@@ -53,5 +50,4 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// Export the router
 module.exports = router;

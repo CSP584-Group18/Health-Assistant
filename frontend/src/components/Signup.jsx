@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./CSS/Signup.css"; // Ensure this imports your shared CSS file
+import "./CSS/Signup.css";
 import axios from "axios";
 
 const baseURL = process.env.REACT_APP_API_BASE_URL;
@@ -49,7 +49,7 @@ const Signup = () => {
       setSuccessMessage(data.msg);
 
       setTimeout(() => {
-        navigate("/login"); // Redirect to login after 2 seconds on success
+        navigate("/login");
       }, 2000);
     } catch (err) {
       setError(err.response?.data?.msg || err.message);
