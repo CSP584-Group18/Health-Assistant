@@ -36,7 +36,6 @@ const Checkout = () => {
       await axios.delete(`${baseURL}/clear`, {
         params: { email },
       });
-      alert('Cart has been cleared.');
     } catch (error) {
       console.error('Error clearing cart:', error);
       alert('Error clearing the cart.');
@@ -64,7 +63,7 @@ const Checkout = () => {
       if (response.status === 201) {
         alert('Order placed successfully!');
         await clearCart(); 
-        navigate('/order-success'); 
+        navigate('/order'); 
       } else {
         alert('Something went wrong. Please try again.');
       }
