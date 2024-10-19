@@ -19,7 +19,7 @@ export default function OrderPage() {
       const response = await axios.get(`${baseURL}/orders/${userEmail}`);
       setOrders(response.data);
     } catch (err) {
-      setError(err.message);
+      console.log(err.message);
     } finally {
       setLoading(false);
     }
