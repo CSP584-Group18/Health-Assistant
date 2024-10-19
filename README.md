@@ -1,45 +1,120 @@
-# EliteCare
+
+# EliteCare - Health Assistant
 
 **Technologies Used**
-<br>
-Server Side: Express.js<br>
-Frontend: React.js, Axios<br>
-Data Storage: MongoDB <br>
-AI Platform: Rasa/Python <br>
-Other Libraries: Axios (for HTTP requests)<br>
-<br>
 
-**Git Clone** 
-<br>
-first clone the repository: <br>
-run command --> git clone https://github.com/CSP584-Group18/Health-Assistant.git <br>
+- **Server Side**: Express.js
+- **Frontend**: React.js, Axios
+- **Database**: MongoDB
+- **AI Platform**: Rasa (Python)
+- **Other Libraries**: Axios (for HTTP requests)
 
-**Server Side Setup**
-<br>
-Install Visual Studio Code: Download and install VS Code <a href="https://code.visualstudio.com/" target="_blank">VS Code</a>.<br>
-Install npm: Ensure that npm (Node.js Package Manager) is installed. You can download it from here <a href="https://nodejs.org/en" target="_blank">Node js</a>.<br>
+---
 
-**Start the Node backend:**
-<br>
-Navigate to the /backend directory.<br>
-Run npm install to install all dependencies.<br>
-Run node server.js to start the server.
+## Project Structure
 
-**Client Side Setup**
-<br>
-Install npm: Ensure that npm (Node.js Package Manager) is installed. You can download it from here <a href="https://nodejs.org/en" target="_blank">Node js</a>.<br>
+```
+/backend   # Node.js Express server code
+/database  # MongoDB setup and configuration
+/frontend  # React.js client-side application
+/rasa      # Rasa AI Agent (NLP and machine learning models)
+```
 
-**Start the React frontend:**
-<br>
-Navigate to the /frontend directory.<br>
-Run npm install to install all dependencies.<br>
-Run npm start to start the client-side React application.<br>
-The app should now be running at http://localhost:3000.<br>
+---
 
-**AI Rasa Setup**
-<br>
-Navigate to the /rasa directory.<br>
-Run rasa train to train the rasa in your project. <br>
-Run rasa run actions <br>
-Run rasa run to start rasa. <br>
+## Getting Started
 
+To get started with the project, follow the steps below:
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/CSP584-Group18/Health-Assistant.git
+cd Health-Assistant
+```
+
+### 2. Backend Setup
+
+1. Install **Visual Studio Code**: Download and install from [here](https://code.visualstudio.com/).
+2. Install **Node.js** and **npm**: Download and install from [Node.js Official Site](https://nodejs.org/en).
+
+#### Start the Node Backend:
+
+- Navigate to the `/backend` directory:
+  ```bash
+  cd backend
+  ```
+
+- Install backend dependencies:
+  ```bash
+  npm install
+  ```
+
+- Start the backend server:
+  ```bash
+  node server.js
+  ```
+
+---
+
+### 3. Frontend Setup
+
+1. Ensure **npm** is installed (as in the backend setup).
+
+#### Start the React Frontend:
+
+- Navigate to the `/frontend` directory:
+  ```bash
+  cd ../frontend
+  ```
+
+- Install frontend dependencies:
+  ```bash
+  npm install
+  ```
+
+- Start the client-side React application:
+  ```bash
+  npm start
+  ```
+
+- The app should now be running at `http://localhost:3000`.
+
+---
+
+### 4. AI (Rasa) Setup
+
+1. Ensure you have Rasa installed (requires Python environment).
+
+#### Start the Rasa AI Agent:
+
+- Navigate to the `/rasa` directory:
+  ```bash
+  cd ../rasa
+  ```
+
+- Train the Rasa model:
+  ```bash
+  rasa train
+  ```
+
+- Run Rasa actions:
+  ```bash
+  rasa run actions
+  ```
+
+- Start the Rasa server:
+  ```bash
+  rasa run
+  ```
+
+---
+
+## Additional Notes
+
+- Ensure that **MongoDB** is properly set up and running before starting the backend.
+- The project relies on several third-party APIs; make sure to configure any required API keys in `.env` files as per the needs of your application.
+  
+---
+
+Feel free to adjust any paths or commands according to your development environment.
