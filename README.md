@@ -94,7 +94,7 @@ cd Health-Assistant
 
 - Navigate to the `/rasa` directory:
   ```bash
-  cd ../rasa
+  cd /rasa
   ```
 
 - Train the Rasa model:
