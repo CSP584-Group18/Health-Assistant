@@ -21,7 +21,7 @@ const Navbar = () => {
       <div className="navbar">
         <div className="nav-logo">
           <Link to="/dashboard">
-            <p>Health Assistant</p>
+            <p>EliteCare</p>
           </Link>
         </div>
         <div className="nav-login-cart">

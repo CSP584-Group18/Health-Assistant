@@ -54,6 +54,7 @@ nlu:
       - I feel [nauseous](symptoms)
       - I have [body aches](symptoms)
       - My [head hurts](symptoms)
+      - [Cough](symptoms)
 
   - intent: select_severity
     examples: |
