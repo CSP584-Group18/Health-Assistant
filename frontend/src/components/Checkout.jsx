@@ -105,6 +105,7 @@ const Checkout = () => {
               type="text"
               name="creditCard"
               value={formData.creditCard}
+              maxLength={16}
               onChange={handleChange}
               required
             />
