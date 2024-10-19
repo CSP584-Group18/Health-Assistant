@@ -65,7 +65,7 @@ cd Health-Assistant
 
 - Navigate to the `/frontend` directory:
   ```bash
-  cd ../frontend
+  cd /frontend
   ```
 
 - Install frontend dependencies:
