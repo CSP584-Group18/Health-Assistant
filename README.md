@@ -17,6 +17,8 @@ Domain & Actions to define the scope of the AI’s responses and custom logic fo
 This setup allows the assistant to continuously learn from interactions, improving its efficiency and accuracy in providing healthcare advice over time.
 
 
+---
+
 **Technologies Used**
 
 - **Server Side**: Express.js
