@@ -72,6 +72,10 @@ cd Health-Assistant
   ```bash
   npm install
   ```
+  or if fails
+  ```bash
+  npm install --legacy-peer-deps
+  ```
 
 - Start the client-side React application:
   ```bash
@@ -105,7 +109,7 @@ cd Health-Assistant
 
 - Start the Rasa server:
   ```bash
-  rasa run
+  rasa run --cors "*"   
   ```
 
 ---
