@@ -42,7 +42,7 @@ cd Health-Assistant
 
 - Navigate to the `/backend` directory:
   ```bash
-  cd backend
+  cd /backend
   ```
 
 - Install backend dependencies:
