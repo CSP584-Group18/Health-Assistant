@@ -2,6 +2,12 @@ const express = require("express");
 const router = express.Router();
 const Order = require("../models/Order");
 
+// Function to generate a unique order ID with "Order" followed by a random 3-digit integer
+const generateOrderId = () => {
+  const randomNum = Math.floor(100 + Math.random() * 900); // Random 3-digit integer
+  return `Order${randomNum}`;
+};
+
 router.post("/", async (req, res) => {
   const {
     customerName,
@@ -24,10 +30,12 @@ router.post("/", async (req, res) => {
       store: deliveryOption === "pickup" ? store : "",
       items,
       totalAmount,
+      order_id: generateOrderId(), // Generate the order ID automatically
+      delivery_date: new Date(),    // Set today's date as the default delivery date
     });
 
     await newOrder.save();
-    res.status(201).json({ message: "Order placed successfully" });
+    res.status(201).json({ message: "Order placed successfully", order: newOrder });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Failed to place order", error });
