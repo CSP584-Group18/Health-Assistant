@@ -11,12 +11,20 @@ intents:
   - confirm_purchase
   - goodbye
   - confirm_purchase_yes_no
+  - order_status           # Intent for order tracking
+  - report_fraud           # Intent for fraud detection
+  - product_issue          # Intent for reporting product issues
+  - upload_image           # Intent for uploading images
 
 entities:
   - symptoms
   - severity
   - medicine_name
   - response
+  - issue_type             # Entity to specify the type of issue (order, fraud, etc.)
+  - order_id               # Entity for order tracking
+  - transaction_id         # Entity for fraud detection
+  - image_url              # Entity for product issue image
 
 slots:
   symptoms:
@@ -44,6 +52,50 @@ slots:
     mappings:
       - type: from_entity
         entity: response
+  issue_type:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: issue_type
+  order_id:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: order_id
+  transaction_id:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: transaction_id
+  image_url:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: image_url
+  operator_task:
+    type: text
+    mappings:
+      - type: from_text
+  order_status:
+    type: text
+    mappings:
+      - type: from_text
+  customer_name:
+    type: text
+    mappings:
+      - type: from_text
+  total_amount:
+    type: float
+    mappings:
+      - type: from_text
+  delivery_date:
+    type: text
+    mappings:
+      - type: from_text
+  product_issue_decision:
+    type: text
+    mappings:
+      - type: from_text
 
 responses:
   utter_greet:
@@ -80,6 +132,25 @@ responses:
   utter_decline_purchase:
     - text: "Thank you! Is there anything else I can help you with?"
 
+  # New responses for Operator and Task-specific Actions
+  utter_operator_order_tracking:
+    - text: "Let me check the status of your order."
+
+  utter_operator_fraud_detection:
+    - text: "I will check for any fraudulent activity related to your transaction."
+
+  utter_operator_product_issue:
+    - text: "Please email an image of the issue to dhruvpatel77741@gmail.com with subject line as Damaged Product Issue."
+
+  utter_order_status:
+    - text: "Hello {customer_name}, your order {order_id} is currently '{order_status}'. The total amount is ${total_amount}, and the estimated delivery date is {delivery_date}."
+
+  utter_product_issue_decision:
+    - text: "Based on the evaluation of the image, I have taken decision that {product_issue_decision}."
+
+  utter_fraud_detection_result:
+    - text: "Fraud check result for transaction {transaction_id}: {fraud_status}."
+
 actions:
   - action_greet_user
   - action_process_symptoms
@@ -88,6 +159,10 @@ actions:
   - action_provide_side_effects
   - action_checkout
   - action_confirm_purchase
+  - action_operator_agent            # Operator action
+  - action_handle_order_tracking     # Order tracking action
+  - action_handle_product_issue      # Product issue handling action
+  - action_handle_fraud_detection    # Fraud detection action
 
 session_config:
   session_expiration_time: 60

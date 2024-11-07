@@ -53,3 +53,34 @@ stories:
       - action: action_provide_side_effects
       - intent: confirm_purchase_yes_no
       - action: action_confirm_purchase
+
+  - story: User asks about order status
+    steps:
+      - intent: order_status
+      - action: action_operator_agent
+      - slot_was_set:
+          - operator_task: "order_tracking"
+      - action: action_handle_order_tracking
+
+  - story: User reports fraud
+    steps:
+      - intent: report_fraud
+      - action: action_operator_agent
+      - slot_was_set:
+          - operator_task: "fraud_detection"
+      - action: action_handle_fraud_detection
+      - action: utter_fraud_detection_result
+
+  - story: User reports product issue
+    steps:
+      - intent: product_issue
+      - action: action_operator_agent
+      - slot_was_set:
+          - operator_task: "product_issue"
+      - action: utter_operator_product_issue
+
+  - story: User uploads image for product issue
+    steps:
+      - intent: upload_image
+      - action: action_handle_product_issue
+      - action: utter_product_issue_decision

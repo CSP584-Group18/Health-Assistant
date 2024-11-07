@@ -118,3 +118,49 @@ nlu:
       - See you soon
       - Take care
       - Bye for now
+
+  - intent: order_status
+    examples: |
+      - Can you check my order status for [Order257](order_id)?
+      - Where is my order [Order257](order_id)?
+      - Track order [Order12345](order_id)
+      - I want to track my order [Order12345](order_id)
+      - What's the status of my order [Order12345](order_id)?
+      - Is my order [Order12345](order_id) on the way?
+      - Can you update me on my order [Order12345](order_id)?
+      - Please track my order [Order12345](order_id)
+      - I need the status of my order [Order12345](order_id)
+
+  - intent: report_fraud
+    examples: |
+      - I need to report a fraud
+      - This transaction is fraudulent
+      - Someone used my card fraudulently
+      - I saw an unknown transaction on my account
+      - Can you check for fraudulent transactions?
+      - I think there was a payment fraud
+      - There's a suspicious transaction on my card
+      - I need help with a fraud report
+
+  - intent: product_issue
+    examples: |
+      - My product arrived damaged
+      - I received a broken item
+      - The product was wet when it arrived
+      - My package was damaged
+      - The item is defective
+      - I got a faulty product
+      - The product is not working as expected
+      - I need to report a product issue
+
+  - intent: upload_image
+    examples: |
+      - I have sent image via email
+      - Here is the picture of the damaged item
+      - I am uploading the image of the product
+      - Here is the image of the faulty product
+      - I uploaded a photo of the broken item
+      - See the image I just uploaded
+      - Here is the photo of the damaged package
+      - I attached an image of the issue
+      - This is the photo of the defective item
