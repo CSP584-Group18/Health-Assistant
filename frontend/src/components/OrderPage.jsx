@@ -52,7 +52,7 @@ export default function OrderPage() {
 
             {orders.map((order) => (
               <div key={order._id} className="order-row">
-                <div>{order._id}</div>
+                <div>{order.order_id}</div>
                 <div>{order.customerName}</div>
                 <div>${order.totalAmount}</div>
                 <div>

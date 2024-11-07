@@ -49,6 +49,15 @@ const orderSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  order_id: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  delivery_date: {
+    type: Date,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Order", orderSchema);
