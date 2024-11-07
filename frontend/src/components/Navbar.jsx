@@ -16,6 +16,10 @@ const Navbar = () => {
     navigate("/order");
   };
 
+  const handleCustomerService = () => {
+    navigate("/customer-service"); // You can change this route to wherever you handle customer service
+  };
+
   return (
     <div className="nav-container">
       <div className="navbar">
@@ -26,6 +30,7 @@ const Navbar = () => {
         </div>
         <div className="nav-login-cart">
           <button onClick={handleOrder}>Order</button>
+          <button onClick={handleCustomerService}>Customer Service</button> {/* New button */}
           <button onClick={handleLogout}>Logout</button>
           <Link to="/cart">
             <img

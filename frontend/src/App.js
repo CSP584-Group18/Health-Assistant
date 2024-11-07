@@ -7,6 +7,7 @@ import MedicineDetail from "./components/MedicineDetail";
 import CartPage from "./components/CartPage";
 import Checkout from "./components/Checkout";
 import OrderPage from "./components/OrderPage";
+import CustomerService from "./components/CustomerService";  // New CustomerService component
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/order" element={<OrderPage />} />
+        <Route path="/customer-service" element={<CustomerService />} />  {/* New route for Customer Service */}
       </Routes>
     </Router>
   );
