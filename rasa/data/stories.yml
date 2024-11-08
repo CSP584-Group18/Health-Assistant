@@ -62,15 +62,6 @@ stories:
           - operator_task: "order_tracking"
       - action: action_handle_order_tracking
 
-  - story: User reports fraud
-    steps:
-      - intent: report_fraud
-      - action: action_operator_agent
-      - slot_was_set:
-          - operator_task: "fraud_detection"
-      - action: action_handle_fraud_detection
-      - action: utter_fraud_detection_result
-
   - story: User reports product issue
     steps:
       - intent: product_issue
@@ -84,3 +75,17 @@ stories:
       - intent: upload_image
       - action: action_handle_product_issue
       - action: utter_product_issue_decision
+
+  - story: User reports fraud issue
+    steps:
+      - intent: fraud_issue
+      - action: action_operator_agent
+      - slot_was_set:
+          - operator_task: "fraud_issue"
+      - action: utter_operator_fraud_issue    
+
+  - story: User uploads image for fraud issue
+    steps:
+      - intent: upload_fraud_image
+      - action: action_handle_fraud_issue
+      - action: utter_fraud_issue_decision
