@@ -131,17 +131,6 @@ nlu:
       - Please track my order [Order12345](order_id)
       - I need the status of my order [Order12345](order_id)
 
-  - intent: report_fraud
-    examples: |
-      - I need to report a fraud
-      - This transaction is fraudulent
-      - Someone used my card fraudulently
-      - I saw an unknown transaction on my account
-      - Can you check for fraudulent transactions?
-      - I think there was a payment fraud
-      - There's a suspicious transaction on my card
-      - I need help with a fraud report
-
   - intent: product_issue
     examples: |
       - My product arrived damaged
@@ -164,3 +153,19 @@ nlu:
       - Here is the photo of the damaged package
       - I attached an image of the issue
       - This is the photo of the defective item
+
+  - intent: fraud_issue
+    examples: |
+      - I need to report a fraud
+      - This transaction is fraudulent
+      - Someone used my card fraudulently
+      - I saw an unknown transaction on my account
+      - Can you check for fraudulent transactions?
+      - I think there was a payment fraud
+      - There's a suspicious transaction on my card
+      - I need help with a fraud report   
+
+  - intent: upload_fraud_image
+    examples: |
+      - I have sent image of fraud via email
+      - Here is the picture of the fraud item

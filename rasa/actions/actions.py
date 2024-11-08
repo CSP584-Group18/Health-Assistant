@@ -127,7 +127,7 @@ class ActionHandleProductIssue(Action):
                                     continue
                                 filename = part.get_filename()
                                 if filename:
-                                    filepath = os.path.join("./email_images", filename)
+                                    filepath = os.path.join("./email_product_images", filename)
                                     os.makedirs(os.path.dirname(filepath), exist_ok=True)
                                     with open(filepath, "wb") as f:
                                         f.write(part.get_payload(decode=True))
@@ -190,17 +190,65 @@ class ActionHandleProductIssue(Action):
 
 class ActionHandleFraudDetection(Action):
     def name(self) -> Text:
-        return "action_handle_fraud_detection"
+        return "action_handle_fraud_issue"
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        image_path = self.check_email_for_images(dispatcher)
+
+        def check_email_for_images():
+            EMAIL_USERNAME = os.getenv("EMAIL_USERNAME")
+            EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
+
+            if not EMAIL_USERNAME or not EMAIL_PASSWORD:
+                dispatcher.utter_message(text="Email credentials are missing. Please check environment variables.")
+                return None
+
+            mail = imaplib.IMAP4_SSL("imap.gmail.com")
+            try:
+                mail.login(EMAIL_USERNAME, EMAIL_PASSWORD)
+                print("Successfully authenticated.")
+                
+                mail.select("inbox")
+                status, messages = mail.search(None, '(UNSEEN)')
+            
+                if not messages[0]:
+                    print("No new emails found")
+                    return None  # No unseen emails
+
+                email_ids = messages[0].split()
+                for email_id in email_ids:
+                    status, msg_data = mail.fetch(email_id, "(RFC822)")
+                    for response_part in msg_data:
+                        if isinstance(response_part, tuple):
+                            msg = email.message_from_bytes(response_part[1])
+                            for part in msg.walk():
+                                if part.get_content_maintype() == "multipart":
+                                    continue
+                                if part.get("Content-Disposition") is None:
+                                    continue
+                                filename = part.get_filename()
+                                if filename:
+                                    filepath = os.path.join("./email_fraud_images", filename)
+                                    os.makedirs(os.path.dirname(filepath), exist_ok=True)
+                                    with open(filepath, "wb") as f:
+                                        f.write(part.get_payload(decode=True))
+                                    print(f"Image saved at {filepath}")
+                                    return filepath
+                print("No image attachments found in new emails.")
+                return None
+            except imaplib.IMAP4.error:
+                print("Failed to authenticate. Check your email credentials.")
+                dispatcher.utter_message(text="Failed to authenticate. Check your email credentials or enable app-specific password if using Gmail.")
+                return None
+            finally:
+                mail.logout()
         
+        image_path = check_email_for_images()
+
         if image_path:
             decision = self.analyze_fraud_image(image_path)
-            dispatcher.utter_message(text=f"Fraud check result: {decision}")
-            return [SlotSet("fraud_status", decision)]
+            return [SlotSet("fraud_issue_decision", decision)]
         else:
-            dispatcher.utter_message(text="No new images found in your email. Please try sending it again.")
+            dispatcher.utter_message(text="No new image found in your email. Please try sending it again.")
             return []
 
     def analyze_fraud_image(self, image_path: str) -> str:
@@ -209,12 +257,17 @@ class ActionHandleFraudDetection(Action):
                 img_info = f"Image format: {img.format}, size: {img.size}, mode: {img.mode}"
             
             prompt = (
-                "You are a customer service assistant for fraud detection in a delivery service. Based on the following transaction information, "
-                "respond with one of these brief actions: 'Refund', 'Decline', or 'Escalate to Human-Agent'. "
-                "If the transaction appears fraudulent, respond with 'Refund'. If it appears legitimate, respond with 'Decline'. "
-                "If it's unclear, respond with 'Escalate to Human-Agent'.\n\n"
-                f"Transaction Analysis: The image metadata indicates a {img_info}."
-            )
+            "You are a customer service assistant specializing in fraud detection for a delivery service. "
+            "Analyze the following receipt or payment information and respond with one of these actions: "
+            "'Refund', 'Decline', or 'Escalate to Human-Agent'.\n\n"
+            "Guidelines:\n"
+            "- If there are clear signs of manipulation (e.g., altered amounts, suspicious inconsistencies in data), respond with 'Refund'.\n"
+            "- If the document appears legitimate, with no signs of tampering or unusual patterns, respond with 'Decline'.\n"
+            "- If the document is unclear or does not provide enough information to make a decision, respond with 'Escalate to Human-Agent'.\n\n"
+            f"Document Metadata: The image format is {img_info}. "
+            "Visible details include payment information, transaction numbers, and other relevant document data. "
+            "Please review this information carefully to provide an appropriate response."
+        )
 
             response = openai.ChatCompletion.create(
                 model="gpt-4-turbo",
@@ -223,13 +276,14 @@ class ActionHandleFraudDetection(Action):
                     {"role": "user", "content": prompt}
                 ],
                 max_tokens=50,
-                temperature=0.3
+                temperature=0.4
             )
 
             decision = response.choices[0].message['content'].strip()
+            print("OpenAI API Response:", decision)
             return decision if decision else "Escalate to Human-Agent"
         except Exception as e:
-            print(f"Error analyzing image: {e}")
+            print("Error analyzing image: {e}")
             return "Escalate to Human-Agent"
 
 class ActionGreetUser(Action):

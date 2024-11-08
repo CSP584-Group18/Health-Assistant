@@ -12,9 +12,10 @@ intents:
   - goodbye
   - confirm_purchase_yes_no
   - order_status           # Intent for order tracking
-  - report_fraud           # Intent for fraud detection
   - product_issue          # Intent for reporting product issues
   - upload_image           # Intent for uploading images
+  - fraud_issue            # Intent for reporting product issues
+  - upload_fraud_image     # Intent for uploading images
 
 entities:
   - symptoms
@@ -25,6 +26,7 @@ entities:
   - order_id               # Entity for order tracking
   - transaction_id         # Entity for fraud detection
   - image_url              # Entity for product issue image
+  - fraud_image_url
 
 slots:
   symptoms:
@@ -72,6 +74,11 @@ slots:
     mappings:
       - type: from_entity
         entity: image_url
+  fraud_image_url:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: fraud_image_url
   operator_task:
     type: text
     mappings:
@@ -93,6 +100,10 @@ slots:
     mappings:
       - type: from_text
   product_issue_decision:
+    type: text
+    mappings:
+      - type: from_text
+  fraud_issue_decision:
     type: text
     mappings:
       - type: from_text
@@ -136,9 +147,6 @@ responses:
   utter_operator_order_tracking:
     - text: "Let me check the status of your order."
 
-  utter_operator_fraud_detection:
-    - text: "I will check for any fraudulent activity related to your transaction."
-
   utter_operator_product_issue:
     - text: "Please email an image of the issue to dhruvpatel77741@gmail.com with subject line as Damaged Product Issue."
 
@@ -148,8 +156,11 @@ responses:
   utter_product_issue_decision:
     - text: "Based on the evaluation of the image, I have taken decision that {product_issue_decision}."
 
-  utter_fraud_detection_result:
-    - text: "Fraud check result for transaction {transaction_id}: {fraud_status}."
+  utter_operator_fraud_issue:
+    - text: "Please email an image of the issue to dhruvpatel77741@gmail.com with subject line as Fraud Issue Report."
+
+  utter_fraud_issue_decision:
+    - text: "Based on the evaluation of the image, I have taken decision that {fraud_issue_decision}."  
 
 actions:
   - action_greet_user
@@ -162,7 +173,7 @@ actions:
   - action_operator_agent            # Operator action
   - action_handle_order_tracking     # Order tracking action
   - action_handle_product_issue      # Product issue handling action
-  - action_handle_fraud_detection    # Fraud detection action
+  - action_handle_fraud_issue        # Fraud detection action
 
 session_config:
   session_expiration_time: 60

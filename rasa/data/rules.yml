@@ -55,15 +55,6 @@ rules:
           - operator_task: "order_tracking"
       - action: action_handle_order_tracking
 
-  - rule: Operator directs to fraud detection
-    steps:
-      - intent: report_fraud
-      - action: action_operator_agent
-      - slot_was_set:
-          - operator_task: "fraud_detection"
-      - action: action_handle_fraud_detection
-      - action: utter_fraud_detection_result
-
   - rule: Operator directs to product issue handling
     steps:
       - intent: product_issue
@@ -77,3 +68,17 @@ rules:
       - intent: upload_image
       - action: action_handle_product_issue
       - action: utter_product_issue_decision
+
+  - rule: Operator directs to fraud issue handling
+    steps:
+      - intent: fraud_issue
+      - action: action_operator_agent
+      - slot_was_set:
+          - operator_task: "fraud_issue"
+      - action: utter_operator_fraud_issue
+
+  - rule: Process fraud issue image
+    steps:
+      - intent: upload_fraud_image
+      - action: action_handle_fraud_issue
+      - action: utter_fraud_issue_decision    
