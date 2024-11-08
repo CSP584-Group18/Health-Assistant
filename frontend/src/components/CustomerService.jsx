@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './CSS/CustomerService.css';
+import Navbar from './Navbar';
 
 function CustomerService() {
   const [selectedOption, setSelectedOption] = useState('submit'); // 'submit' or 'analyze'
@@ -9,6 +11,8 @@ function CustomerService() {
   const [responseMessage, setResponseMessage] = useState('');
   const [analysisResult, setAnalysisResult] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+
+  const baseURL = process.env.REACT_APP_API_BASE_URL;
 
   // Handle ticket number change for both forms
   const handleTicketNumberChange = (e) => {
@@ -24,7 +28,7 @@ function CustomerService() {
   const handleImageChange = (e) => {
     setTicketImage(e.target.files[0]);
   };
-
+    
   // Handle submit ticket form
   const handleSubmitTicket = async (e) => {
     e.preventDefault();
@@ -33,7 +37,7 @@ function CustomerService() {
     formData.append('ticketImage', ticketImage);
 
     try {
-      const response = await axios.post('http://localhost:3006/api/tickets', formData, {
+      const response = await axios.post(`${baseURL}/tickets`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -60,68 +64,69 @@ function CustomerService() {
   };
 
   return (
-    <div>
-      <h2>Customer Service Dashboard</h2>
+    <>
+    <Navbar/>
+    <div className="customer-service">
+      <h2 className="customer-service__title">Customer Service Dashboard</h2>
 
-      {/* Dropdown to select between "Submit a Ticket" and "Analyze a Ticket" */}
-      <select value={selectedOption} onChange={(e) => setSelectedOption(e.target.value)}>
+      <select
+        className="customer-service__dropdown"
+        value={selectedOption}
+        onChange={(e) => setSelectedOption(e.target.value)}
+      >
         <option value="submit">Submit a Ticket</option>
         <option value="analyze">Analyze a Ticket</option>
       </select>
 
-      {/* Submit a Ticket Form */}
       {selectedOption === 'submit' && (
-        <div>
-          <h3>Submit a Ticket</h3>
-          <form onSubmit={handleSubmitTicket}>
-            {/* Ticket Number Field */}
-            <label>
+        <div className="customer-service__submit-section">
+          <h3 className="customer-service__subtitle">Submit a Ticket</h3>
+          <form className="customer-service__form" onSubmit={handleSubmitTicket}>
+            <label className="customer-service__label">
               Ticket Number: {ticketNumber || 'Generating automatically after submission'}
             </label>
-            <br />
-            <label>
-              Description:
-              <textarea
-                value={description}
-                onChange={handleDescriptionChange}
-                required
-              />
-            </label>
-            <br />
-            <label>
-              Upload Image:
-              <input type="file" onChange={handleImageChange} />
-            </label>
-            <br />
-            <button type="submit">Submit Ticket</button>
+            <textarea
+              className="customer-service__textarea"
+              value={description}
+              onChange={handleDescriptionChange}
+              placeholder="Describe your issue"
+              required
+            />
+            <input
+              type="file"
+              className="customer-service__file-input"
+              onChange={handleImageChange}
+            />
+            <button type="submit" className="customer-service__submit-button">Submit Ticket</button>
           </form>
-          {responseMessage && <p>{responseMessage}</p>}
-          {ticketNumber && <p>Your Ticket Number: {ticketNumber}</p>} {/* Display generated ticket number */}
+          {responseMessage && <p className="customer-service__response">{responseMessage}</p>}
+          {ticketNumber && <p className="customer-service__ticket-number">Your Ticket Number: {ticketNumber}</p>}
         </div>
       )}
 
-      {/* Analyze a Ticket Form */}
       {selectedOption === 'analyze' && (
-        <div>
-          <h3>Analyze a Ticket</h3>
+        <div className="customer-service__analyze-section">
+          <h3 className="customer-service__subtitle">Analyze a Ticket</h3>
           <input
             type="text"
+            className="customer-service__input"
             value={ticketNumber}
             onChange={handleTicketNumberChange}
             placeholder="Enter ticket number"
             required
           />
-          <button onClick={handleAnalyzeTicket}>Analyze Ticket</button>
+          <button className="customer-service__analyze-button" onClick={handleAnalyzeTicket}>Analyze Ticket</button>
           {analysisResult && (
-            <div>
+            <div className="customer-service__analysis-result">
               <h4>Analysis Result:</h4>
               <p>{analysisResult}</p>
             </div>
           )}
-          {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+          {errorMessage && <p className="customer-service__error-message">{errorMessage}</p>}
         </div>
       )}
     </div>
+    </>
   );
 }
 
