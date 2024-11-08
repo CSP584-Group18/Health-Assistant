@@ -46,7 +46,6 @@ rules:
       - intent: confirm_purchase_yes_no
       - action: action_confirm_purchase
 
-  # Updated rule for handling order tracking without conflicting with the story
   - rule: Operator directs to order tracking
     steps:
       - intent: order_status

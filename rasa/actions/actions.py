@@ -22,7 +22,7 @@ db = client['Health']
 disease_collection = db['disease']
 medicine_collection = db['medicines']
 
-# Set OpenAI API Key from environment
+# OpenAI API Key
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 class ActionOperatorAgent(Action):
@@ -104,17 +104,15 @@ class ActionHandleProductIssue(Action):
                 mail.login(EMAIL_USERNAME, EMAIL_PASSWORD)
                 print("Successfully authenticated.")
                 
-                # Select the inbox and look for unseen emails
                 mail.select("inbox")
                 status, messages = mail.search(None, '(UNSEEN)')
                 
                 if not messages[0]:
                     print("No new emails found.")
-                    return None  # No unseen emails
+                    return None
 
                 email_ids = messages[0].split()
 
-                # Loop through unread emails to find an attachment image
                 for email_id in email_ids:
                     status, msg_data = mail.fetch(email_id, "(RFC822)")
                     for response_part in msg_data:
@@ -140,14 +138,12 @@ class ActionHandleProductIssue(Action):
                 dispatcher.utter_message(text="Failed to authenticate. Please check email credentials or enable app-specific password if using Gmail.")
                 return None
             finally:
-                mail.logout()  # Ensures logout happens even if an error occurs
+                mail.logout()
 
-        # Retrieve the image path from email
         image_path = check_email_for_images()
         
         if image_path:
             decision = self.analyze_image(image_path)
-            # dispatcher.utter_message(text=f"The decision based on the image is: {decision}")
             return [SlotSet("product_issue_decision", decision)]
         else:
             dispatcher.utter_message(text="No new images found in your email. Please try sending it again.")
@@ -155,11 +151,9 @@ class ActionHandleProductIssue(Action):
 
     def analyze_image(self, image_path: str) -> str:
         try:
-            # Open the image to gather basic information
             with Image.open(image_path) as img:
                 img_info = f"Image format: {img.format}, size: {img.size}, mode: {img.mode}"
             
-            # Provide detailed but concise prompt to guide decision-making
             prompt = (
                 "You are a customer service assistant for a delivery service. Based on the following package information, "
                 "respond with one of these brief actions: 'I will initiate Refund', 'I will initiate Replacement', or 'I will Escalate to Human Agent'. "
@@ -171,18 +165,16 @@ class ActionHandleProductIssue(Action):
                 "damaged, with creases, tears, and other clear signs of mishandling. Based on this description, provide a one-line response."
             )
 
-            # Use the OpenAI API with gpt-4-turbo (or gpt-4o-mini if applicable)
             response = openai.ChatCompletion.create(
                 model="gpt-4-turbo",
                 messages=[
                     {"role": "system", "content": "You are a helpful assistant for customer service product issue resolution."},
                     {"role": "user", "content": prompt}
                 ],
-                max_tokens=50,  # Limit to 10 tokens to enforce a brief response
-                temperature=0.3  # Lower temperature for more deterministic answers
+                max_tokens=50,
+                temperature=0.3 
             )
 
-            # Extract the response
             decision = response.choices[0].message['content'].strip()
             print("OpenAI API response:", decision)
             return decision if decision else "Escalate to Human-Agent"
@@ -214,7 +206,7 @@ class ActionHandleFraudDetection(Action):
             
                 if not messages[0]:
                     print("No new emails found")
-                    return None  # No unseen emails
+                    return None
 
                 email_ids = messages[0].split()
                 for email_id in email_ids:
