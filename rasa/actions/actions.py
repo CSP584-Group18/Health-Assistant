@@ -163,8 +163,10 @@ class ActionHandleProductIssue(Action):
             prompt = (
                 "You are a customer service assistant for a delivery service. Based on the following package information, "
                 "respond with one of these brief actions: 'I will initiate Refund', 'I will initiate Replacement', or 'I will Escalate to Human Agent'. "
-                "If the package appears damaged, respond with 'I will initiate Refund'. If the package looks wet, respond with 'I will initiate Replacement'. "
+                "If the package appears damaged, respond with 'I will initiate Refund'. If the package looks wet, respond with 'I will initiate Replacement'."
                 "If the package appears normal or it's hard to tell, respond with 'I will Escalate to Human Agent'.\n\n"
+                "If the medicine appears damaged or used, respond with 'I will initiate Refund'. If the medicine is expired, respond with 'I will initiate Replacement'."
+                "If the medicine appears normal or it's hard to tell, respond with 'I will Escalate to Human Agent'.\n\n"
                 f"Package Analysis: The image metadata indicates a {img_info}. The package in the image appears visibly "
                 "damaged, with creases, tears, and other clear signs of mishandling. Based on this description, provide a one-line response."
             )

@@ -141,6 +141,21 @@ nlu:
       - I got a faulty product
       - The product is not working as expected
       - I need to report a product issue
+      - My medicine strip is broken
+      - I received an expired medicine
+      - The medicine bottle was leaking
+      - The tablets are damaged
+      - I received a used medicine package
+      - The blister pack was already open
+      - The medication is past its expiry date
+      - I got the wrong medicine
+      - The dosage information on the medicine is incorrect
+      - The medicine packaging is torn
+      - My prescription pills were missing
+      - The tablets look crushed
+      - The capsules are deformed
+      - I received a half-used bottle of syrup
+
 
   - intent: upload_image
     examples: |
