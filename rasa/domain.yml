@@ -11,21 +11,21 @@ intents:
   - confirm_purchase
   - goodbye
   - confirm_purchase_yes_no
-  - order_status           # Intent for order tracking
-  - product_issue          # Intent for reporting product issues
-  - upload_image           # Intent for uploading images
-  - fraud_issue            # Intent for reporting product issues
-  - upload_fraud_image     # Intent for uploading images
+  - order_status
+  - product_issue
+  - upload_image
+  - fraud_issue
+  - upload_fraud_image
 
 entities:
   - symptoms
   - severity
   - medicine_name
   - response
-  - issue_type             # Entity to specify the type of issue (order, fraud, etc.)
-  - order_id               # Entity for order tracking
-  - transaction_id         # Entity for fraud detection
-  - image_url              # Entity for product issue image
+  - issue_type
+  - order_id
+  - transaction_id
+  - image_url
   - fraud_image_url
 
 slots:
@@ -143,7 +143,6 @@ responses:
   utter_decline_purchase:
     - text: "Thank you! Is there anything else I can help you with?"
 
-  # New responses for Operator and Task-specific Actions
   utter_operator_order_tracking:
     - text: "Let me check the status of your order."
 
@@ -170,10 +169,10 @@ actions:
   - action_provide_side_effects
   - action_checkout
   - action_confirm_purchase
-  - action_operator_agent            # Operator action
-  - action_handle_order_tracking     # Order tracking action
-  - action_handle_product_issue      # Product issue handling action
-  - action_handle_fraud_issue        # Fraud detection action
+  - action_operator_agent
+  - action_handle_order_tracking
+  - action_handle_product_issue
+  - action_handle_fraud_issue
 
 session_config:
   session_expiration_time: 60
