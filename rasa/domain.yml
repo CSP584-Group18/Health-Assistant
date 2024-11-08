@@ -148,7 +148,7 @@ responses:
     - text: "Let me check the status of your order."
 
   utter_operator_product_issue:
-    - text: "Please email an image of the issue to dhruvpatel77741@gmail.com with subject line as Damaged Product Issue."
+    - text: "Please email an image of the issue to dhruvpatel77741@gmail.com."
 
   utter_order_status:
     - text: "Hello {customer_name}, your order {order_id} is currently '{order_status}'. The total amount is ${total_amount}, and the estimated delivery date is {delivery_date}."
