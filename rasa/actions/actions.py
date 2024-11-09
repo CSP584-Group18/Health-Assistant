@@ -5,6 +5,7 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
 from PIL import Image
+import pytesseract
 from datetime import datetime
 import os
 import openai
@@ -235,33 +236,48 @@ class ActionHandleFraudDetection(Action):
                 return None
             finally:
                 mail.logout()
-        
+
+        def extract_text_from_image(image_path):
+            try:
+                with Image.open(image_path) as img:
+                    img = img.convert("L")
+                    img = img.resize((img.width * 2, img.height * 2), Image.Resampling.LANCZOS)
+                    img = img.point(lambda x: 0 if x < 128 else 255, '1')
+
+                    text = pytesseract.image_to_string(img, lang="eng")
+                    print("Extracted Text:", text)
+                    return text
+            except Exception as e:
+                print(f"Error extracting text from image: {e}")
+                return None
+
         image_path = check_email_for_images()
 
         if image_path:
-            decision = self.analyze_fraud_image(image_path)
-            return [SlotSet("fraud_issue_decision", decision)]
+            extracted_text = extract_text_from_image(image_path)
+            if extracted_text:
+                decision = self.analyze_fraud_text(extracted_text)
+                return [SlotSet("fraud_issue_decision", decision)]
+            else:
+                dispatcher.utter_message(text="No readable content found in the image. Please try sending a clearer image.")
+                return [SlotSet("fraud_issue_decision", "Escalate to Human-Agent")]
         else:
             dispatcher.utter_message(text="No new image found in your email. Please try sending it again.")
             return []
 
-    def analyze_fraud_image(self, image_path: str) -> str:
+    def analyze_fraud_text(self, text: str) -> str:
         try:
-            with Image.open(image_path) as img:
-                img_info = f"Image format: {img.format}, size: {img.size}, mode: {img.mode}"
-            
             prompt = (
-            "You are a customer service assistant specializing in fraud detection for a delivery service. "
-            "Analyze the following receipt or payment information and respond with one of these actions: "
-            "'Refund', 'Decline', or 'Escalate to Human-Agent'.\n\n"
-            "Guidelines:\n"
-            "- If there are clear signs of manipulation (e.g., altered amounts, suspicious inconsistencies in data), respond with 'Refund'.\n"
-            "- If the document appears legitimate, with no signs of tampering or unusual patterns, respond with 'Decline'.\n"
-            "- If the document is unclear or does not provide enough information to make a decision, respond with 'Escalate to Human-Agent'.\n\n"
-            f"Document Metadata: The image format is {img_info}. "
-            "Visible details include payment information, transaction numbers, and other relevant document data. "
-            "Please review this information carefully to provide an appropriate response."
-        )
+                "You are a customer service assistant specializing in fraud detection for a banking service. "
+                "Based on the following transaction information, respond with one of these actions: "
+                "'Refund', 'Decline', or 'Escalate to Human-Agent'.\n\n"
+                "Guidelines:\n"
+                "- If there are clear signs of fraud or unauthorized charges (e.g., unrecognized amounts, locations), respond with 'Refund'.\n"
+                "- If the transaction appears legitimate but minor issues are detected, respond with 'Decline'.\n"
+                "- If the information is unclear or insufficient to make a decision, respond with 'Escalate to Human-Agent'.\n\n"
+                f"Transaction Information:\n{text}\n\n"
+                "Please review this information carefully to provide an appropriate response."
+            )
 
             response = openai.ChatCompletion.create(
                 model="gpt-4-turbo",
@@ -277,7 +293,7 @@ class ActionHandleFraudDetection(Action):
             print("OpenAI API Response:", decision)
             return decision if decision else "Escalate to Human-Agent"
         except Exception as e:
-            print("Error analyzing image: {e}")
+            print("Error analyzing text: {e}")
             return "Escalate to Human-Agent"
 
 class ActionGreetUser(Action):
