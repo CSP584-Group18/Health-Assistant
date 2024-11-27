@@ -13,15 +13,27 @@ import imaplib
 import email
 from email.header import decode_header
 
-# MongoDB connection
+# Load MongoDB URI from environment variable
+mongo_uri = os.getenv('MONGO_URI')
+
+# Ensure the environment variable is set
+if not mongo_uri:
+    raise EnvironmentError("MONGO_URI environment variable is not set")
+
+# Connect to MongoDB
 client = MongoClient(
-    'mongodb+srv://sakshirpatel29062002:APVFDuw4CUvpQZBl@health-assitant.wm6oi.mongodb.net/',
+    mongo_uri,
     tls=True,
     tlsAllowInvalidCertificates=True
 )
+
+# Access the database and collections
 db = client['Health']
 disease_collection = db['disease']
 medicine_collection = db['medicines']
+
+# Example: Verify connection
+print("Connected to MongoDB")
 
 # OpenAI API Key
 openai.api_key = os.getenv("OPENAI_API_KEY")
