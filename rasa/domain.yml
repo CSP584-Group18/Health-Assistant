@@ -1,0 +1,179 @@
+version: "3.1"
+
+intents:
+  - greet
+  - mood_happy
+  - mood_sad
+  - symptom_report
+  - select_severity
+  - provide_medicine
+  - ask_side_effects
+  - confirm_purchase
+  - goodbye
+  - confirm_purchase_yes_no
+  - order_status
+  - product_issue
+  - upload_image
+  - fraud_issue
+  - upload_fraud_image
+
+entities:
+  - symptoms
+  - severity
+  - medicine_name
+  - response
+  - issue_type
+  - order_id
+  - transaction_id
+  - image_url
+  - fraud_image_url
+
+slots:
+  symptoms:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: symptoms
+  severity:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: severity
+  medicine_ids:
+    type: list
+    mappings:
+      - type: from_entity
+        entity: medicine_name
+  selected_medicine:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: medicine_name
+  response:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: response
+  issue_type:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: issue_type
+  order_id:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: order_id
+  transaction_id:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: transaction_id
+  image_url:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: image_url
+  fraud_image_url:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: fraud_image_url
+  operator_task:
+    type: text
+    mappings:
+      - type: from_text
+  order_status:
+    type: text
+    mappings:
+      - type: from_text
+  customer_name:
+    type: text
+    mappings:
+      - type: from_text
+  total_amount:
+    type: float
+    mappings:
+      - type: from_text
+  delivery_date:
+    type: text
+    mappings:
+      - type: from_text
+  product_issue_decision:
+    type: text
+    mappings:
+      - type: from_text
+  fraud_issue_decision:
+    type: text
+    mappings:
+      - type: from_text
+
+responses:
+  utter_greet:
+    - text: "Hello! How can I assist you today?"
+
+  utter_happy:
+    - text: "I'm glad to hear you're feeling good!"
+
+  utter_sad:
+    - text: "I'm sorry to hear that. Could you please describe your symptoms so I can assist?"
+
+  utter_select_severity:
+    - text: "Please select the severity of your symptoms:"
+
+  utter_provide_medicine:
+    - text: "The recommended medicines are: {medicine_names}"
+
+  utter_medicine_details:
+    - text: "The price of {selected_medicine} is {price}. Description: {description}. Dosage: Take {dosage}."
+      image: "{image}"
+
+  utter_side_effects:
+    - text: "The side effects of {selected_medicine} are: {side_effects}. Would you like to proceed with the purchase?"
+
+  utter_goodbye:
+    - text: "Goodbye! Take care."
+
+  utter_confirm_purchase:
+    - text: "Would you like to buy this medicine?"
+
+  utter_redirect_checkout:
+    - text: "Please visit: [Checkout Page](http://localhost:3000/medicine/medId)"
+
+  utter_decline_purchase:
+    - text: "Thank you! Is there anything else I can help you with?"
+
+  utter_operator_order_tracking:
+    - text: "Let me check the status of your order."
+
+  utter_operator_product_issue:
+    - text: "Please email an image of the issue to dhruvpatel77741@gmail.com."
+
+  utter_order_status:
+    - text: "Hello {customer_name}, your order {order_id} is currently '{order_status}'. The total amount is ${total_amount}, and the estimated delivery date is {delivery_date}."
+
+  utter_product_issue_decision:
+    - text: "Based on the evaluation of the image, I have taken decision that {product_issue_decision}."
+
+  utter_operator_fraud_issue:
+    - text: "Please email an image of the issue to dhruvpatel77741@gmail.com with subject line as Fraud Issue Report."
+
+  utter_fraud_issue_decision:
+    - text: "Based on the evaluation of the image, I have taken decision that {fraud_issue_decision}."  
+
+actions:
+  - action_greet_user
+  - action_process_symptoms
+  - action_provide_medicine
+  - action_medicine_details
+  - action_provide_side_effects
+  - action_checkout
+  - action_confirm_purchase
+  - action_operator_agent
+  - action_handle_order_tracking
+  - action_handle_product_issue
+  - action_handle_fraud_issue
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

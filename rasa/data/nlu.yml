@@ -1,0 +1,186 @@
+version: "3.1"
+
+nlu:
+  - intent: greet
+    examples: |
+      - hello
+      - hi
+      - good morning
+      - hey
+      - hey there
+      - hello there
+      - hi bot
+      - hello, how are you?
+      - greetings
+
+  - intent: mood_happy
+    examples: |
+      - I am feeling happy
+      - I am great
+      - I am feeling good
+      - I am happy
+      - I'm in a good mood
+      - I feel fantastic
+      - I feel amazing
+      - I am enjoying myself
+
+  - intent: mood_sad
+    examples: |
+      - I am feeling bad
+      - I am not okay
+      - I am sad
+      - I am feeling down
+      - I am not feeling well
+      - I am feeling sick
+      - I don't feel good
+      - I feel terrible
+      - I am feeling awful
+      - I am not feeling my best
+      - I feel sad
+      - I feel weak
+
+  - intent: symptom_report
+    examples: |
+      - I have a [headache](symptoms)
+      - I am feeling [feverish](symptoms)
+      - My [stomach hurts](symptoms)
+      - I have a [cold](symptoms)
+      - I think I have a [fever](symptoms)
+      - I am experiencing a [headache](symptoms)
+      - My [throat is sore](symptoms)
+      - I feel [dizzy](symptoms)
+      - I have a [cough](symptoms)
+      - My [back hurts](symptoms)
+      - I feel [nauseous](symptoms)
+      - I have [body aches](symptoms)
+      - My [head hurts](symptoms)
+      - [Cough](symptoms)
+
+  - intent: select_severity
+    examples: |
+      - Major
+      - Moderate
+      - Minor
+      - It is severe
+      - It is mild
+      - It is moderate
+      - The pain is severe
+      - It is intense
+      - It is a mild symptom
+      - It is manageable
+      - It feels moderate
+
+  - intent: provide_medicine
+    examples: |
+      - [Paracetamol](medicine_name)
+      - [Ibuprofen](medicine_name)
+      - I need [aspirin](medicine_name)
+      - Give me [codeine](medicine_name)
+      - I want to buy [Naproxen](medicine_name)
+      - Is [Paracetamol](medicine_name) good for me?
+      - What about [Ibuprofen](medicine_name)?
+
+  - intent: ask_side_effects
+    examples: |
+      - Are there any side effects?
+      - What are the side effects?
+      - Does this have any side effects?
+      - Will this medicine have side effects?
+      - Are there any bad effects?
+      - Will this harm me?
+      - Is there a risk of side effects?
+      - What are the risks of this medicine?
+      - Could this have adverse effects?
+      - Will this cause any issues?
+      - Is it safe to take this?
+      - Does this drug have any side effects?
+
+  - intent: confirm_purchase_yes_no
+    examples: |
+      - yes
+      - no
+      - I would like to buy it
+      - I don't want to buy
+      - I will purchase it
+      - I don't need it
+
+  - intent: goodbye
+    examples: |
+      - bye
+      - goodbye
+      - see you later
+      - talk to you later
+      - I'm done
+      - I am leaving
+      - I am finished
+      - Thanks, goodbye
+      - Bye, bot
+      - See you soon
+      - Take care
+      - Bye for now
+
+  - intent: order_status
+    examples: |
+      - Can you check my order status for [Order257](order_id)?
+      - Where is my order [Order257](order_id)?
+      - Track order [Order12345](order_id)
+      - I want to track my order [Order12345](order_id)
+      - What's the status of my order [Order12345](order_id)?
+      - Is my order [Order12345](order_id) on the way?
+      - Can you update me on my order [Order12345](order_id)?
+      - Please track my order [Order12345](order_id)
+      - I need the status of my order [Order12345](order_id)
+
+  - intent: product_issue
+    examples: |
+      - My product arrived damaged
+      - I received a broken item
+      - The product was wet when it arrived
+      - My package was damaged
+      - The item is defective
+      - I got a faulty product
+      - The product is not working as expected
+      - I need to report a product issue
+      - My medicine strip is broken
+      - I received an expired medicine
+      - The medicine bottle was leaking
+      - The tablets are damaged
+      - I received a used medicine package
+      - The blister pack was already open
+      - The medication is past its expiry date
+      - I got the wrong medicine
+      - The dosage information on the medicine is incorrect
+      - The medicine packaging is torn
+      - My prescription pills were missing
+      - The tablets look crushed
+      - The capsules are deformed
+      - I received a half-used bottle of syrup
+
+
+  - intent: upload_image
+    examples: |
+      - I have sent image via email
+      - Here is the picture of the damaged item
+      - I am uploading the image of the product
+      - Here is the image of the faulty product
+      - I uploaded a photo of the broken item
+      - See the image I just uploaded
+      - Here is the photo of the damaged package
+      - I attached an image of the issue
+      - This is the photo of the defective item
+
+  - intent: fraud_issue
+    examples: |
+      - I need to report a fraud
+      - This transaction is fraudulent
+      - Someone used my card fraudulently
+      - I saw an unknown transaction on my account
+      - Can you check for fraudulent transactions?
+      - I think there was a payment fraud
+      - There's a suspicious transaction on my card
+      - I need help with a fraud report   
+
+  - intent: upload_fraud_image
+    examples: |
+      - I have sent image of fraud via email
+      - Here is the picture of the fraud item

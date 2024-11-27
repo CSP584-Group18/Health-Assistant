@@ -128,3 +128,14 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Ignore Rasa cache and models
+.rasa/
+
+# Ignore Python bytecode files
+__pycache__/
+
+# Ignore virtual environment
+venv/
+
+.DS_Store
