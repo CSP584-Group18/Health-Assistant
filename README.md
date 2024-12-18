@@ -140,3 +140,12 @@ cd Health-Assistant
 ---
 
 Feel free to adjust any paths or commands according to your development environment.
+
+---
+
+## Contributors
+
+- [Dhruv Patel](https://github.com/dhruvpatel77741)  
+- [Dirgh Patel](https://github.com/dirghpatel3110)  
+- [Sakshi Patel](https://github.com/sakshipatel29)  
+- [Dhruvi Patel](https://github.com/dhruvipatel-24)  
